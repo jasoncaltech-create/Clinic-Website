@@ -23,12 +23,15 @@ The header and footer are repeated in all three pages. If you change the address
 
 Search every page for **待確認**. Each one is shown on the page in a dashed gold box and must be filled in or removed before the site goes public:
 
-- 本一牙醫診所 clinic hours (whole table) and whether its phone number is the same as 本一診所
 - FAQ answers: parking, public transport, what to bring, appointments, 健保, accessibility
 - Each physician's medical/dental school (學歷) and 趙文惠院長's 專長
 - The "其他服務" lists taken from the business cards (keep or delete)
 
 When you fill in an FAQ answer, also add it to the `FAQPage` part of the `<script type="application/ld+json">` block near the top of `index.html` so Google can read it. If you change clinic hours, also update `openingHoursSpecification` in that same block of `clinic.html` and `index.html`.
+
+## Background images
+
+The soft backgrounds (window light with leaf shadows, a fine linen texture, and a row of thin gold arches) are drawn in code as SVG files in `assets/images/bg/`. They are abstract on purpose, so nobody mistakes them for photos of the clinic. To remove one, delete its `url("../images/bg/...")` line in `assets/css/style.css`.
 
 ## Logo and photos
 
