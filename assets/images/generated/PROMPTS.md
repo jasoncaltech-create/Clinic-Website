@@ -1,6 +1,6 @@
 # 生成示意圖：提示詞與檔名 Image-generation prompts
 
-The images in this folder are **placeholders** (soft gradients with faint line art). Generate each image below, then save it **with exactly the same file name** in this folder, replacing the placeholder. Nothing else needs to change; the pages already point to these files.
+The images in this folder are **illustrated stand-ins**: landscapes of Guanyin Mountain, the Tamsui River and reeds, drawn in the same style as the homepage illustration. They are still meant to be replaced. Generate each image below, then save it **with exactly the same file name** in this folder, replacing the stand-in. Nothing else needs to change; the pages already point to these files.
 
 All of these images are shown on the site with a small **示意圖** (illustration) label, because they are not photos of the real clinic. Keep that label. Only remove it if you replace an image with a real photo of the clinic.
 

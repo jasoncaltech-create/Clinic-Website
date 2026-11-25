@@ -474,3 +474,18 @@ a.map-frame:hover span { transform: scale(1.04); }
 }
 @keyframes vt-out { to { opacity: 0; transform: translateY(-14px) scale(0.99); } }
 @keyframes vt-in { from { opacity: 0; transform: translateY(28px); } }
+
+/* ---------- 診療項目小圖示（裝飾用線條圖，與山稜線、蘆葦同風格） ---------- */
+.service-icon { display: block; width: 72px; height: 72px; margin: 0 0 1.1rem; overflow: visible; }
+.service-icon .si-sun { fill: var(--sunset-2); }
+.service-icon .si-ln, .service-icon .si-ac { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.service-icon .si-ln { stroke: var(--navy); stroke-width: 1.6; }
+.service-icon .si-ac { stroke: var(--gold); stroke-width: 2; }
+.service-icon .si-faint { opacity: 0.45; }
+/* 隨卡片淡入後，圖示稍晚浮現 */
+.js main .service .service-icon { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.92);
+  transition: opacity 0.9s var(--ease) calc(var(--d, 0s) + 0.25s), transform 1.1s var(--ease) calc(var(--d, 0s) + 0.25s); }
+.js main .service.is-visible .service-icon { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js main .service .service-icon { opacity: 1 !important; transform: none !important; transition: none !important; }
+}

@@ -39,7 +39,7 @@ The FAQ answers, services and doctor profiles were completed from the clinic's b
 - Visitors who turn on "reduce motion" in their device settings see everything without animation. If JavaScript fails, all content still appears.
 - Moving between pages fades the old page out and slides the new one in.
 
-After changing the CSS or JS, increase the `?v=` number where `style.css` and `main.js` are linked in each page (currently `v=8`), so browsers load the new version immediately.
+After changing the CSS or JS, increase the `?v=` number where `style.css` and `main.js` are linked in each page (currently `v=9`), so browsers load the new version immediately.
 
 ## Images
 
