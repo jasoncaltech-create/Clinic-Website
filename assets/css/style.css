@@ -27,7 +27,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background: var(--ivory) url("../images/bg/linen.svg") repeat;  /* 細緻亞麻紋理 */
+  background: var(--ivory) url("../images/bg/linen.svg?v=3") repeat;  /* 細緻亞麻紋理 */
   color: var(--charcoal);
   font-family: var(--font-sans);
   font-size: 1.125rem;          /* 18px，方便長者閱讀 */
@@ -94,7 +94,7 @@ a:hover { color: var(--navy-soft); }
 
 /* ---------- 共用區塊 ---------- */
 section { padding: 4.5rem 0; }
-section.alt { background: var(--white) url("../images/bg/linen.svg") repeat; border-top: 1px solid var(--taupe); border-bottom: 1px solid var(--taupe); }
+section.alt { background: var(--white) url("../images/bg/linen.svg?v=3") repeat; border-top: 1px solid var(--taupe); border-bottom: 1px solid var(--taupe); }
 @media (max-width: 720px) { section { padding: 3rem 0; } }
 
 h1, h2, h3 { color: var(--navy); line-height: 1.45; margin: 0 0 1rem; font-weight: 600; }
@@ -125,7 +125,7 @@ p { margin: 0 0 1rem; }
 /* ---------- 首頁 Hero ---------- */
 .hero {
   padding: 6rem 0 4.5rem; text-align: center;
-  background: var(--ivory) url("../images/bg/hero.svg") center / cover no-repeat;  /* 窗光與枝葉光影 */
+  background: var(--ivory) url("../images/bg/hero.svg?v=3") center / cover no-repeat;  /* 窗光與枝葉光影 */
 }
 .hero h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); letter-spacing: 0.2em; margin-bottom: 1.25rem; }
 .hero .divider { width: 64px; height: 1px; background: var(--gold); margin: 0 auto 1.5rem; }
@@ -149,7 +149,7 @@ p { margin: 0 0 1rem; }
 }
 
 /* ---------- 部門卡片 ---------- */
-section.alt.dept-section { background-image: url("../images/bg/arch.svg"), url("../images/bg/linen.svg"); background-repeat: repeat-x, repeat; background-position: center bottom, 0 0; background-size: 120px 160px, auto; padding-bottom: 6rem; }
+section.alt.dept-section { background-image: url("../images/bg/arch.svg?v=3"), url("../images/bg/linen.svg?v=3"); background-repeat: repeat-x, repeat; background-position: center bottom, 0 0; background-size: 120px 160px, auto; padding-bottom: 6rem; }
 .dept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 @media (max-width: 760px) { .dept-grid { grid-template-columns: 1fr; } }
 .dept-card {
@@ -279,7 +279,7 @@ section.alt .hours-table { background: var(--ivory); }
 /* ---------- 部門頁標題 ---------- */
 .page-hero {
   padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--taupe);
-  background: var(--ivory) url("../images/bg/page-hero.svg") right center / cover no-repeat;
+  background: var(--ivory) url("../images/bg/page-hero.svg?v=3") right center / cover no-repeat;
 }
 .page-hero .eyebrow { color: var(--muted); letter-spacing: 0.15em; margin-bottom: 0.5rem; font-size: 1rem; }
 .page-hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: 0.18em; margin-bottom: 1rem; }
