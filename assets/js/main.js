@@ -12,7 +12,7 @@
   var groups = [
     ".section-head", ".dept-card", ".about-grid > div", ".about-photo", ".pillars li",
     ".service", ".other-services", ".doctor", ".hours-wrap > div", ".call-note",
-    ".faq details", ".contact-grid > *", ".wide-photo", ".photo-caption", ".narrow > p"
+    ".faq details", ".contact-grid > *", ".photo-caption", ".narrow > p", ".about-text > p", ".intro-grid > *"
   ];
   var targets = [];
   groups.forEach(function (sel) {
@@ -60,4 +60,23 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
   update();
+})();
+
+/* 3. 換頁轉場的備援：瀏覽器若不支援 CSS 換頁轉場，點選站內連結時先讓頁面淡出再前往 */
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce || "CSSViewTransitionRule" in window) return;
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target && a.target !== "_self") return;
+    var url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || url.pathname === location.pathname) return;
+    e.preventDefault();
+    document.body.classList.add("is-leaving");
+    setTimeout(function () { location.href = url.href; }, 260);
+  });
+  // 按「上一頁」回到此頁時，恢復顯示
+  window.addEventListener("pageshow", function () { document.body.classList.remove("is-leaving"); });
 })();

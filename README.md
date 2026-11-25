@@ -25,7 +25,8 @@ The FAQ answers, services and doctor profiles were completed from the clinic's b
 
 ## Images and animation
 
-- `assets/images/photos/`: real photos of the clinic (exterior and reception), lightly retouched. They appear on the homepage and at the top of each department page. Replace them with new photos using the same file names.
+- `assets/images/photos/`: the clinic's own photos (exterior, straightened to a front-on view, and the reception area) on the homepage, plus licensed free stock photos on the two department pages, marked 示意圖 (illustration) on the page. Sources and licences are listed in `assets/images/photos/README.md`. Replace any of them with new photos using the same file names.
+- Page transitions: moving between pages fades the old page out and slides the new one in, like apple.com. This is set at the bottom of `assets/css/style.css`.
 - `assets/js/main.js`: gentle fade-in effects while scrolling. They switch off automatically for visitors who turn on "reduce motion" in their device settings.
 - Colours are set at the top of `assets/css/style.css`: bright warm white, light stone, deep navy, a pale blue-grey accent, and champagne gold used only for thin lines.
 
