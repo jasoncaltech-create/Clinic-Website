@@ -25,10 +25,9 @@ The FAQ answers, services and doctor profiles were completed from the clinic's b
 
 ## Images and animation
 
-- `assets/images/photos/`: real photos of the clinic (exterior and reception), lightly retouched. Replace them with new photos using the same file names.
-- `assets/images/luzhou/`: an illustration of Guanyin Mountain at sunset seen from the Luzhou riverside, and a line drawing of the Lee Family Mansion (蘆洲李宅) used in the footer. These are drawings, not photos.
-- `assets/images/bg/`: subtle textures.
-- `assets/js/main.js`: gentle fade-in and parallax effects while scrolling. They switch off automatically for visitors who turn on "reduce motion" in their device settings.
+- `assets/images/photos/`: real photos of the clinic (exterior and reception), lightly retouched. They appear on the homepage and at the top of each department page. Replace them with new photos using the same file names.
+- `assets/js/main.js`: gentle fade-in effects while scrolling. They switch off automatically for visitors who turn on "reduce motion" in their device settings.
+- Colours are set at the top of `assets/css/style.css`: bright warm white, light stone, deep navy, a pale blue-grey accent, and champagne gold used only for thin lines.
 
 After changing the CSS or JS, increase the `?v=` number where `style.css` and `main.js` are linked in each page, so browsers load the new version immediately.
 
