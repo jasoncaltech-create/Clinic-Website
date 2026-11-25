@@ -267,6 +267,15 @@
 </head>
 <body>
 <a class="skip-link" href="#main">跳至主要內容</a>
+<!-- 背景插畫：蘆洲淡水河畔與觀音山，捲動時太陽由早晨移到黃昏，到「聯絡資訊」成為夜晚（assets/css/style.css「背景插畫」） -->
+<div class="sky-scene" aria-hidden="true">
+  <i class="sky sky-noon"></i><i class="sky sky-gold"></i><i class="sky sky-dusk"></i>
+  <div class="sun-x"><div class="sun-y"><i class="sun"></i></div></div>
+  <i class="sky sky-night"></i>
+  <div class="land-back"><div class="glint-x"><i class="glint"></i></div></div>
+  <i class="land-reeds"></i>
+  <i class="night-veil"></i>
+</div>
 
 <header class="site-header">
   <div class="container header-inner">
@@ -284,13 +293,10 @@
 </header>
 
 <main id="main">
+<div class="daylight">
 
   <!-- ========== 主視覺 ========== -->
-  <!-- 背景：蘆洲淡水河畔・觀音山夕照（assets/images/scene/ 內的分層插畫，捲動時各層以不同速度移動） -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="scene" aria-hidden="true">
-      <i class="s-sky"></i><i class="s-mtn"></i><i class="s-river"></i><i class="s-reeds-l"></i><i class="s-reeds-r"></i>
-    </div>
     <div class="container hero-content">
       <h1 id="hero-title">本一聯合診所</h1>
       <!-- ✏️ 主視覺標語（兩段文字各自換行） -->
@@ -301,7 +307,7 @@
         <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=%E6%96%B0%E5%8C%97%E5%B8%82%E8%98%86%E6%B4%B2%E5%8D%80%E9%95%B7%E6%A6%AE%E8%B7%AF43-1%E8%99%9F" target="_blank" rel="noopener">Google Maps 導航</a>
       </div>
     </div>
-    <p class="hero-credit"><span>背景插畫｜蘆洲淡水河畔・觀音山夕照</span></p>
+    <p class="hero-credit"><span>背景插畫｜蘆洲淡水河畔・觀音山</span></p>
   </section>
 
   <div class="container quick-wrap">
@@ -322,7 +328,7 @@
   </div>
 
   <!-- ========== 部門選擇 ========== -->
-  <section id="departments" class="deco-glow deco-ridge" aria-labelledby="dept-title">
+  <section id="departments" aria-labelledby="dept-title">
     <div class="container">
       <div class="section-head center"><h2 id="dept-title">診療部門</h2></div>
       <div class="dept-grid">
@@ -345,7 +351,7 @@
   </section>
 
   <!-- ========== 關於我們 ========== -->
-  <section id="about" class="deco-ripples deco-reeds" aria-labelledby="about-title">
+  <section id="about" aria-labelledby="about-title">
     <div class="container">
       <div class="about-grid">
         <div class="about-text">
@@ -372,7 +378,7 @@
   </section>
 
   <!-- ========== 診所環境（捲動時畫面停留，照片逐漸放大） ========== -->
-  <section id="environment" class="pin deco-glow" aria-labelledby="env-title">
+  <section id="environment" class="pin" aria-labelledby="env-title">
     <div class="pin-stage">
       <div class="container section-head center">
         <h2 id="env-title">診所環境</h2>
@@ -392,7 +398,7 @@
   </section>
 
   <!-- ========== 常見問題 ========== -->
-  <section id="faq" class="deco-reeds-l deco-ripples" aria-labelledby="faq-title">
+  <section id="faq" aria-labelledby="faq-title">
     <div class="container">
       <div class="section-head"><h2 id="faq-title">常見問題</h2></div>
       <!-- ✏️ 常見問題：每組 <details> 為一題，<summary> 為問題，<div class="answer"> 為答案 -->
@@ -440,6 +446,8 @@
       </div>
     </div>
   </section>
+
+</div><!-- /daylight -->
 
   <!-- ========== 聯絡資訊（夜晚） ========== -->
   <section id="contact" class="evening" aria-labelledby="contact-title">

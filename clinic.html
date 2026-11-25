@@ -139,6 +139,15 @@
 </head>
 <body>
 <a class="skip-link" href="#main">跳至主要內容</a>
+<!-- 背景插畫：蘆洲淡水河畔與觀音山，捲動時太陽由早晨移到黃昏，到「聯絡資訊」成為夜晚（assets/css/style.css「背景插畫」） -->
+<div class="sky-scene" aria-hidden="true">
+  <i class="sky sky-noon"></i><i class="sky sky-gold"></i><i class="sky sky-dusk"></i>
+  <div class="sun-x"><div class="sun-y"><i class="sun"></i></div></div>
+  <i class="sky sky-night"></i>
+  <div class="land-back"><div class="glint-x"><i class="glint"></i></div></div>
+  <i class="land-reeds"></i>
+  <i class="night-veil"></i>
+</div>
 
 <header class="site-header">
   <div class="container header-inner">
@@ -156,11 +165,9 @@
 </header>
 
 <main id="main">
+<div class="daylight">
 
   <section class="page-hero" aria-labelledby="page-title">
-    <div class="scene scene--dusk" aria-hidden="true">
-      <i class="s-sky"></i><i class="s-mtn"></i><i class="s-river"></i><i class="s-reeds-l"></i><i class="s-reeds-r"></i>
-    </div>
     <div class="container page-hero-grid">
       <div>
       <p class="eyebrow">本一聯合診所</p>
@@ -192,7 +199,7 @@
   </nav>
 
   <!-- ========== 診所介紹 ========== -->
-  <section id="intro" class="deco-glow" aria-labelledby="intro-title">
+  <section id="intro" aria-labelledby="intro-title">
     <div class="container intro-grid">
       <div class="intro-text">
       <div class="section-head"><h2 id="intro-title">診所介紹</h2></div>
@@ -209,7 +216,7 @@
   </section>
 
   <!-- ========== 診療項目 ========== -->
-  <section id="services" class="deco-ripples deco-reeds" aria-labelledby="services-title">
+  <section id="services" aria-labelledby="services-title">
     <div class="container">
       <div class="section-head"><h2 id="services-title">診療項目</h2></div>
       <!-- ✏️ 診療項目：每個 <article class="service"> 為一個項目 -->
@@ -261,7 +268,7 @@
   </div>
 
   <!-- ========== 醫師介紹 ========== -->
-  <section id="doctors" class="deco-ridge" aria-labelledby="doctors-title">
+  <section id="doctors" aria-labelledby="doctors-title">
     <div class="container">
       <div class="section-head"><h2 id="doctors-title">醫師介紹</h2></div>
       <!-- ✏️ 醫師介紹：每位醫師為一個 <article class="doctor"> -->
@@ -297,7 +304,7 @@
   </section>
 
   <!-- ========== 門診時間 ========== -->
-  <section id="hours" class="deco-glow deco-reeds-l" aria-labelledby="hours-title">
+  <section id="hours" aria-labelledby="hours-title">
     <div class="container">
       <div class="section-head"><h2 id="hours-title">門診時間</h2></div>
       <div class="hours-wrap">
@@ -324,6 +331,8 @@
       </div>
     </div>
   </section>
+
+</div><!-- /daylight -->
 
   <!-- ========== 聯絡資訊 ========== -->
   <section id="contact" class="evening" aria-labelledby="contact-title">

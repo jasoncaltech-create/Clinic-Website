@@ -1,12 +1,16 @@
 /* =========================================================
    本一聯合診所 — 網站樣式
-   設計概念：從首頁的淡水河夕照開始，往下捲動時天色由「夕陽」轉為「黃昏」，
-   到聯絡資訊與頁尾成為「夜晚」。色彩與字型集中在下方 :root，修改這裡即可全站套用。
+   設計概念：整個網站的背景是蘆洲淡水河畔與觀音山。往下捲動時，太陽由早晨的左方升起、
+   中午到達天頂、午後往右方的觀音山落下，到「聯絡資訊」與頁尾成為夜晚。
+   色彩與字型集中在下方 :root，修改這裡即可全站套用。
    ========================================================= */
 
 :root {
-  /* 天色（由上往下） */
-  --sunset: #F2E6D9;      /* 夕陽：暖沙色 */
+  /* 一天的天色（背景插畫，由上往下捲動依序出現） */
+  --sky-morning: #F2E6E0; /* 早晨 */
+  --night-sky: #0E1828;   /* 夜晚：接近黑色的深海軍藍 */
+  /* 介面用色 */
+  --sunset: #F2E6D9;      /* 暖沙色 */
   --sunset-2: #EFDCC8;
   --dusk: #EDD8D3;        /* 黃昏：灰玫瑰 */
   --dusk-2: #E6CFCD;
@@ -40,16 +44,14 @@
 @media (max-width: 370px) { :root { --header-h: 108px; } }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; font-size: 112.5%; background: var(--sunset); scroll-padding-top: var(--header-h); }
+html { -webkit-text-size-adjust: 100%; font-size: 112.5%; background: var(--sky-morning); scroll-padding-top: var(--header-h); }
 @media (max-width: 720px) { html { font-size: 106.25%; } }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 
 body {
   margin: 0; color: var(--ink);
   font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.9; letter-spacing: 0.02em;
-  overflow-x: clip; -webkit-font-smoothing: antialiased;
-  /* 沒有捲動效果時（例如開啟「減少動態效果」），以固定的漸層呈現同樣的天色變化 */
-  background: linear-gradient(180deg, var(--sunset) 0%, var(--sunset-2) 18%, var(--dusk) 40%, var(--dusk-2) 55%, var(--twilight) 72%, var(--twilight-2) 100%);
+  overflow-x: clip; -webkit-font-smoothing: antialiased; background: transparent;
 }
 img { max-width: 100%; height: auto; display: block; }
 a { color: var(--navy); text-underline-offset: 0.22em; }
@@ -61,13 +63,47 @@ a:hover { color: var(--navy-soft); }
 .skip-link:focus { top: 1rem; color: #fff; }
 .nowrap { display: inline-block; }
 
-/* ---------- 隨捲動變化的天色（固定在畫面後方，只改變透明度） ---------- */
-.fx body { background: transparent; }
-.fx body::before, .fx body::after {
-  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; will-change: opacity;
+/* ---------- 背景插畫：固定在畫面後方的蘆洲淡水河畔與觀音山 ----------
+   天空分層（早晨→中午→午後→黃昏→夜晚）以透明度交疊；太陽沿弧線移動（外層左右、內層上下）。
+   沒有捲動效果時（減少動態效果、JavaScript 無法執行）顯示靜止的早晨畫面。 */
+.sky-scene { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+  background: linear-gradient(180deg, #E9E3EA 0%, #F2E6E0 38%, #F8E5D3 62%, #F5DAC2 100%); }
+.sky-scene .sky { position: absolute; inset: 0; opacity: 0; }
+.sky-noon { background: linear-gradient(180deg, #E3E9EB 0%, #EFF0EB 38%, #FAF3E7 62%, #F7EADA 100%); }
+.sky-gold { background: linear-gradient(180deg, #EEDFCD 0%, #F4DEC4 38%, #F3D0AA 62%, #EDC49C 100%); }
+.sky-dusk { background: linear-gradient(180deg, #D6C4D2 0%, #E5C8CA 36%, #EEC1AE 62%, #E7AF96 100%); }
+.sky-night {
+  background:
+    radial-gradient(circle at 80% 18%, #F2EDE2 0, #F2EDE2 2.1vmin, rgba(242, 237, 226, 0.22) 2.5vmin, rgba(242, 237, 226, 0) 13vmin),
+    url("../images/bg/stars.svg") 50% 0 / 1600px 400px repeat-x,
+    url("../images/bg/stars.svg") 20% 360px / 1600px 400px repeat-x,
+    linear-gradient(180deg, #0B1422 0%, #132136 42%, #26304B 68%, #3A3B58 100%);
 }
-.fx body::before { background: linear-gradient(180deg, var(--dusk) 0%, var(--dusk-2) 100%); }
-.fx body::after { background: linear-gradient(180deg, var(--twilight) 0%, var(--twilight-2) 100%); }
+/* 太陽：外層左右移動、內層上下移動，合起來畫出弧線；預設在早晨的位置 */
+.sun-x, .sun-y { position: absolute; left: 0; top: 0; }
+.sun-x { transform: translate3d(10vw, 0, 0); }
+.sun-y { transform: translate3d(0, 52vh, 0); }
+.sun { position: absolute; width: 72vmin; height: 72vmin; left: -36vmin; top: -36vmin; border-radius: 50%;
+  background: radial-gradient(circle, #FFF8EC 0, #FFF8EC 6.4%, rgba(255, 238, 212, 0.9) 7.4%, rgba(252, 226, 192, 0.45) 18%, rgba(250, 220, 184, 0.16) 34%, rgba(250, 220, 184, 0) 50%); }
+/* 地景：觀音山、淡水河、蘆葦，固定貼齊畫面底部 */
+.land-back, .land-reeds { position: absolute; left: 0; right: 0; }
+.land-back { inset: 0; background: url("../images/scene/river.svg") 50% 100% / cover no-repeat, url("../images/scene/mountains.svg") 50% 100% / cover no-repeat; }
+.land-reeds { bottom: -10%; height: 66%;
+  background: url("../images/scene/reeds-left.svg") left bottom / min(32vw, 520px) auto no-repeat,
+              url("../images/scene/reeds-right.svg") right bottom / min(30vw, 490px) auto no-repeat; }
+/* 河面上的陽光倒影，跟著太陽左右移動；地平線位置與插畫一致 */
+.glint-x { position: absolute; left: 0; top: min(64.8vh, calc(100vh - 19.8vw)); transform: translate3d(10vw, 0, 0); }
+.glint { position: absolute; left: -17vmin; top: 0; width: 34vmin; height: 24vh; background: url("../images/scene/glint.svg") 50% 0 / 100% 100% no-repeat; opacity: 0.85; }
+/* 夜晚時把地景壓暗 */
+.night-veil { position: absolute; inset: 0; opacity: 0;
+  background: linear-gradient(180deg, rgba(9, 15, 26, 0) 30%, rgba(9, 15, 26, 0.7) 62%, rgba(7, 12, 22, 0.9) 100%); }
+@media (max-width: 720px) {
+  .land-reeds { height: 52%; background-size: 58vw auto, 54vw auto; }
+}
+@media (max-aspect-ratio: 1/1) {
+  .sun-y { transform: translate3d(0, 30vh, 0); }
+  .sun { width: 90vmin; height: 90vmin; left: -45vmin; top: -45vmin; }
+}
 
 /* ---------- 頁首 ---------- */
 .site-header {
@@ -127,32 +163,12 @@ p { margin: 0 0 1rem; }
 .btn.primary { background: var(--navy); color: #fff; box-shadow: 0 12px 30px rgba(24, 43, 64, 0.22); }
 .btn.primary:hover { background: var(--navy-soft); color: #fff; }
 
-/* ---------- 主視覺：分層插畫（觀音山、淡水河、蘆葦） ---------- */
+/* ---------- 主視覺 ---------- */
 .hero {
   min-height: 100svh; margin-top: calc(-1 * var(--header-h));
   padding: calc(var(--header-h) + clamp(2.5rem, 9vh, 6.5rem)) 0 clamp(9rem, 22vh, 14rem);
   display: flex; flex-direction: column; overflow: hidden; text-align: center;
 }
-.scene { position: absolute; inset: 0; z-index: -1; background: #F2E7DC; overflow: hidden; }
-.scene > i { position: absolute; inset: 0; background-repeat: no-repeat; background-size: cover; background-position: 50% 100%; z-index: 0; }
-.scene .s-sky { background-image: url("../images/scene/sky.svg"); }
-.scene .s-mtn { background-image: url("../images/scene/mountains.svg"); }
-.scene .s-river { background-image: url("../images/scene/river.svg"); }
-.scene .s-reeds-l, .scene .s-reeds-r { top: auto; bottom: -12%; height: 58%; width: min(32vw, 520px); background-size: contain; }
-.scene .s-reeds-l { right: auto; background-image: url("../images/scene/reeds-left.svg"); background-position: left bottom; }
-.scene .s-reeds-r { left: auto; background-image: url("../images/scene/reeds-right.svg"); background-position: right bottom; }
-/* 底部淡出，與下方區塊自然銜接 */
-.scene::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 30%; z-index: 2;
-  background: linear-gradient(180deg, rgba(242, 230, 217, 0) 0%, rgba(242, 230, 217, 0.75) 60%, var(--sunset) 100%); }
-/* 部門頁使用「黃昏」色調 */
-.scene--dusk::before { content: ""; position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(180deg, rgba(232, 205, 205, 0.62) 0%, rgba(226, 196, 200, 0.38) 55%, rgba(214, 190, 205, 0.3) 100%); }
-.scene--dusk::after { background: linear-gradient(180deg, rgba(237, 216, 211, 0) 0%, rgba(237, 216, 211, 0.8) 60%, var(--dusk) 100%); }
-@media (max-width: 720px) {
-  .scene .s-sky, .scene .s-mtn, .scene .s-river { background-position: 72% 100%; }
-  .scene .s-reeds-l, .scene .s-reeds-r { height: 46%; width: 58vw; }
-}
-
 .hero-content { position: relative; z-index: 1; transform-origin: 50% 0; }
 .hero-content h1 {
   font-size: clamp(3rem, 8.6vw, 6.6rem); letter-spacing: 0.2em; margin: 0 0 1.4rem; padding-left: 0.2em;
@@ -189,22 +205,10 @@ p { margin: 0 0 1rem; }
   .quick-info > div + div { border-left: 0; border-top: 1px solid var(--panel-line); }
 }
 
-/* ---------- 區塊背景點綴：山稜線、河面波紋、蘆葦、柔光（僅裝飾，以 CSS/SVG 繪製） ----------
-   ::before 用於柔光或波紋，::after 用於山稜線或蘆葦；顏色由 background-color 決定。 */
-.deco-glow::before, .deco-ripples::before, .deco-ridge::after, .deco-reeds::after, .deco-reeds-l::after {
-  content: ""; position: absolute; z-index: -1; pointer-events: none;
+/* ---------- 文字底板：沒有卡片的段落放在柔和的半透明底板上，捲過山景時仍清楚可讀 ---------- */
+.about-text, .intro-text, .hours-wrap > div:last-child {
+  background: var(--panel); border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 3rem); box-shadow: var(--shadow);
 }
-.deco-glow::before { inset: 0; background: radial-gradient(ellipse 55% 45% at 78% 28%, rgba(255, 244, 228, 0.75) 0%, rgba(255, 244, 228, 0) 100%),
-  radial-gradient(ellipse 45% 40% at 12% 80%, rgba(255, 238, 232, 0.5) 0%, rgba(255, 238, 232, 0) 100%); }
-.deco-ripples::before { left: 0; right: 0; bottom: 8%; height: 170px; background-color: var(--navy);
-  -webkit-mask: url("../images/bg/ripples.svg") center / 1600px 170px repeat-x; mask: url("../images/bg/ripples.svg") center / 1600px 170px repeat-x; }
-.deco-ridge::after { left: 0; right: 0; bottom: 0; height: 200px; background-color: var(--navy);
-  -webkit-mask: url("../images/bg/ridge.svg") center bottom / max(1600px, 100%) 200px no-repeat; mask: url("../images/bg/ridge.svg") center bottom / max(1600px, 100%) 200px no-repeat; }
-.deco-reeds::after, .deco-reeds-l::after { bottom: 0; width: min(30vw, 380px); height: min(70%, 520px); background-color: #7C6657;
-  -webkit-mask: url("../images/bg/reeds-edge.svg") left bottom / contain no-repeat; mask: url("../images/bg/reeds-edge.svg") left bottom / contain no-repeat; }
-.deco-reeds::after { right: 0; transform: scaleX(-1); }
-.deco-reeds-l::after { left: 0; }
-@media (max-width: 720px) { .deco-reeds::after, .deco-reeds-l::after { opacity: 0.5; width: 42vw; height: 300px; } }
 
 /* ---------- 部門卡片 ---------- */
 .dept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; }
@@ -312,12 +316,12 @@ p { margin: 0 0 1rem; }
 /* ---------- 夜晚：聯絡資訊與頁尾 ---------- */
 .evening {
   color: var(--on-night); padding-top: clamp(13rem, 24vw, 19rem);
-  background: linear-gradient(180deg, rgba(24, 43, 64, 0) 0, rgba(24, 43, 64, 0.55) 7rem, rgba(31, 52, 76, 0.94) 11rem, var(--night-2) 14rem, var(--night) 100%);
+  /* 靜止畫面（減少動態效果、無 JavaScript）時，聯絡資訊本身就是夜晚 */
+  background: url("../images/bg/stars.svg") 50% 9rem / max(1600px, 100%) 400px no-repeat,
+    linear-gradient(180deg, rgba(14, 24, 40, 0) 0, rgba(14, 24, 40, 0.6) 7rem, rgba(14, 24, 40, 0.95) 11rem, var(--night-sky) 14rem, var(--night-sky) 100%);
 }
-.evening::before { content: ""; position: absolute; inset: 9rem 0 auto; height: 420px; z-index: -1; pointer-events: none;
-  background: url("../images/bg/stars.svg") center top / max(1600px, 100%) 400px no-repeat; opacity: 0.85; }
-.evening::after { content: ""; position: absolute; left: 0; right: 0; top: 8.5rem; height: 200px; z-index: -1; pointer-events: none; background-color: #F4EADF; opacity: 0.55;
-  -webkit-mask: url("../images/bg/ridge.svg") center bottom / max(1600px, 100%) 200px no-repeat; mask: url("../images/bg/ridge.svg") center bottom / max(1600px, 100%) 200px no-repeat; }
+/* 有捲動效果時，夜空由背景插畫呈現 */
+.fx .evening { background: linear-gradient(180deg, rgba(9, 15, 26, 0) 0, rgba(9, 15, 26, 0.28) 16rem); }
 .evening h2, .evening h3 { color: var(--on-night); }
 .evening .section-head p, .evening .photo-caption { color: var(--on-night-muted); }
 .evening a { color: var(--on-night); }
@@ -347,7 +351,7 @@ a.map-frame span { position: relative; padding: 0.8rem 1.9rem; border-radius: 99
 a.map-frame:hover span { transform: scale(1.04); }
 @media (max-width: 720px) { .map-frame { aspect-ratio: 4 / 3; } }
 
-.site-footer { background: var(--night); color: var(--on-night-muted); padding: 2rem 0 2.5rem; font-size: 1rem; }
+.site-footer { background: var(--night-sky); color: var(--on-night-muted); padding: 2rem 0 2.5rem; font-size: 1rem; }
 .site-footer a { color: #fff; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; border-top: 1px solid rgba(244, 234, 223, 0.14); padding-top: 3.5rem; }
 @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
@@ -357,6 +361,7 @@ a.map-frame:hover span { transform: scale(1.04); }
 .site-footer li { margin-bottom: 0.4rem; }
 .site-footer p { margin: 0 0 0.4rem; }
 .footer-bottom { margin-top: 2.5rem; font-size: 0.9rem; }
+.fx .site-footer { background: rgba(9, 15, 26, 0.5); }
 
 /* ---------- 部門頁主視覺 ---------- */
 .page-hero { min-height: 88svh; margin-top: calc(-1 * var(--header-h)); padding: calc(var(--header-h) + clamp(2.5rem, 8vh, 5rem)) 0 clamp(7rem, 16vh, 10rem); display: flex; align-items: center; overflow: hidden; }
@@ -403,26 +408,45 @@ a.map-frame:hover span { transform: scale(1.04); }
 @keyframes rise { from { opacity: 0; transform: translate3d(0, 40px, 0); } to { opacity: 1; transform: none; } }
 
 /* --- 與捲動同步（.fx） --- */
-.fx body::before, .fx body::after, .fx .scene > i, .fx .hero-content, .fx .page-hero-grid, .fx .hero-credit, .fx .grow .photo-inner,
+.fx .sky-scene .sky, .fx .sun-x, .fx .sun-y, .fx .glint-x, .fx .night-veil, .fx .land-back, .fx .land-reeds,
+.fx .hero-content, .fx .page-hero-grid, .fx .hero-credit, .fx .grow .photo-inner,
 .fx .pin-stage .section-head, .fx .pin-photo .photo-inner, .fx .pin-photo .photo-caption {
   animation-duration: 1s; animation-timing-function: linear; animation-fill-mode: both;
 }
-.fx body::before { animation-name: sd-sky-dusk; }
-.fx body::after { animation-name: sd-sky-twilight; }
-.fx .scene .s-sky { animation-name: sd-hero-sky; }
-.fx .scene .s-mtn { animation-name: sd-hero-mtn; }
-.fx .scene .s-river { animation-name: sd-hero-river; }
-.fx .scene .s-reeds-l, .fx .scene .s-reeds-r { animation-name: sd-hero-reeds; }
+.fx .sky-noon { animation-name: sd-day-noon; }
+.fx .sky-gold { animation-name: sd-day-gold; }
+.fx .sky-dusk { animation-name: sd-day-dusk; }
+.fx .sun-x, .fx .glint-x { animation-name: sd-day-x; }
+.fx .sun-y { animation-name: sd-day-y; }
+.fx .sky-night, .fx .night-veil { animation-name: sd-night; }
+.fx .land-back { animation-name: sd-hero-land; }
+.fx .land-reeds { animation-name: sd-hero-reeds; }
 .fx .hero-content, .fx .page-hero-grid { animation-name: sd-hero-text; }
 .fx .hero-credit { animation-name: sd-hero-fade; }
 .fx .grow .photo-inner { animation-name: sd-grow; transform-origin: 50% 50%; }
 
-@keyframes sd-sky-dusk { 0%, 10% { opacity: 0; } 42%, 100% { opacity: 1; } }
-@keyframes sd-sky-twilight { 0%, 45% { opacity: 0; } 80%, 100% { opacity: 1; } }
-@keyframes sd-hero-sky { to { transform: translate3d(0, 50vh, 0); } }
-@keyframes sd-hero-mtn { to { transform: translate3d(0, 32vh, 0); } }
-@keyframes sd-hero-river { to { transform: translate3d(0, 16vh, 0); } }
-@keyframes sd-hero-reeds { to { transform: translate3d(0, -14vh, 0) scale(1.08); } }
+/* 一天：早晨（左下）→ 中午（正上方）→ 午後、黃昏（往右落到觀音山後方） */
+@keyframes sd-day-noon { 0%, 14% { opacity: 0; } 38%, 100% { opacity: 1; } }
+@keyframes sd-day-gold { 0%, 52% { opacity: 0; } 72%, 100% { opacity: 1; } }
+@keyframes sd-day-dusk { 0%, 76% { opacity: 0; } 96%, 100% { opacity: 1; } }
+@keyframes sd-day-x { from { transform: translate3d(10vw, 0, 0); } to { transform: translate3d(74vw, 0, 0); } }
+@keyframes sd-day-y {
+  0% { transform: translate3d(0, 52vh, 0); animation-timing-function: cubic-bezier(.3, .6, .5, 1); }
+  48% { transform: translate3d(0, 19vh, 0); animation-timing-function: cubic-bezier(.5, 0, .7, .4); }
+  100% { transform: translate3d(0, 80vh, 0); }
+}
+@media (max-aspect-ratio: 1/1) {
+  @keyframes sd-day-y {
+    0% { transform: translate3d(0, 30vh, 0); animation-timing-function: cubic-bezier(.3, .6, .5, 1); }
+    48% { transform: translate3d(0, 15vh, 0); animation-timing-function: cubic-bezier(.5, 0, .7, .4); }
+    100% { transform: translate3d(0, 74vh, 0); }
+  }
+}
+/* 夜晚：進入「聯絡資訊」時 */
+@keyframes sd-night { from { opacity: 0; } to { opacity: 1; } }
+/* 第一個畫面捲過時，山與河稍微下沉，蘆葦下沉得更快，讓出空間給內容 */
+@keyframes sd-hero-land { to { transform: translate3d(0, 12vh, 0); } }
+@keyframes sd-hero-reeds { to { transform: translate3d(0, 26vh, 0); } }
 @keyframes sd-hero-text { 0% { opacity: 1; transform: none; } 70%, 100% { opacity: 0; transform: translate3d(0, 22vh, 0) scale(0.84); } }
 @keyframes sd-hero-fade { 0% { opacity: 1; } 25%, 100% { opacity: 0; } }
 @keyframes sd-grow { from { opacity: 0.35; transform: scale(0.72); } to { opacity: 1; transform: none; } }
@@ -444,9 +468,14 @@ a.map-frame:hover span { transform: scale(1.04); }
 @keyframes sd-pin-cap { 0%, 58% { opacity: 0; transform: translate3d(0, 24px, 0); } 78%, 100% { opacity: 1; transform: none; } }
 
 /* 原生支援時以 CSS 驅動；main.js 改用備援方式時會加上 .fx-js，此段即不套用 */
-@supports (animation-timeline: scroll()) {
-  .fx:not(.fx-js) body::before, .fx:not(.fx-js) body::after { animation-timeline: scroll(root); }
-  .fx:not(.fx-js) .scene > i, .fx:not(.fx-js) .hero-content, .fx:not(.fx-js) .page-hero-grid, .fx:not(.fx-js) .hero-credit { animation-timeline: scroll(root); animation-range: 0 100vh; }
+@supports (animation-timeline: scroll()) and (timeline-scope: --a) {
+  /* 白天：捲過「聯絡資訊」之前的所有內容（.daylight）；夜晚：「聯絡資訊」進入畫面時 */
+  .fx:not(.fx-js) body { timeline-scope: --day, --night; }
+  .fx:not(.fx-js) .daylight { view-timeline: --day block; }
+  .fx:not(.fx-js) #contact { view-timeline: --night block; }
+  .fx:not(.fx-js) .sky-scene .sky:not(.sky-night), .fx:not(.fx-js) .sun-x, .fx:not(.fx-js) .sun-y, .fx:not(.fx-js) .glint-x { animation-timeline: --day; animation-range: contain 0% contain 100%; }
+  .fx:not(.fx-js) .sky-night, .fx:not(.fx-js) .night-veil { animation-timeline: --night; animation-range: entry 0% entry 45%; }
+  .fx:not(.fx-js) .land-back, .fx:not(.fx-js) .land-reeds, .fx:not(.fx-js) .hero-content, .fx:not(.fx-js) .page-hero-grid, .fx:not(.fx-js) .hero-credit { animation-timeline: scroll(root); animation-range: 0 100vh; }
   .fx:not(.fx-js) .grow { view-timeline: --grow block; }
   .fx:not(.fx-js) .grow .photo-inner { animation-timeline: --grow; animation-range: entry 0% cover 50%; }
   .fx:not(.fx-js) .pin { view-timeline: --pin block; }

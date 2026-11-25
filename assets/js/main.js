@@ -46,8 +46,10 @@
   }, { rootMargin: "0px 0px -10% 0px", threshold: 0.15 });
   targets.forEach(function (el) { io.observe(el); });
 
-  /* 2. 與捲動同步的效果（視差、天色、照片放大、固定畫面） */
-  var native = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()") && !/[?&]fxfallback/.test(location.search);
+  /* 2. 與捲動同步的效果（背景的太陽與天色、地景下沉、照片放大、固定畫面） */
+  var native = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()") && CSS.supports("timeline-scope: --a") &&
+    !/[?&]fxfallback/.test(location.search);
+  var dayEl = document.querySelector(".daylight"), nightEl = document.getElementById("contact");
   if (!native && !document.getAnimations) {
     // 太舊的瀏覽器：不做與捲動同步的效果，內容照常顯示
   } else if (!native) {
@@ -62,7 +64,8 @@
       var y = window.scrollY, vh = window.innerHeight, max = root.scrollHeight - vh;
       anims.forEach(function (a) {
         var n = a.animationName, el = a.effect && a.effect.target, p = 0, box, r;
-        if (n.indexOf("sd-sky") === 0) p = max > 0 ? y / max : 0;
+        if (n.indexOf("sd-day") === 0) { r = dayEl ? dayEl.getBoundingClientRect() : null; p = r ? -r.top / Math.max(1, r.height - vh) : (max > 0 ? y / max : 0); }
+        else if (n === "sd-night") { r = nightEl ? nightEl.getBoundingClientRect() : null; p = r ? (vh - r.top) / (vh * 0.45) : 0; }
         else if (n.indexOf("sd-hero") === 0) p = y / vh;
         else if (n === "sd-grow") { r = el.closest(".grow").getBoundingClientRect(); p = (vh - r.top) / ((vh + r.height) / 2); }
         else if (n.indexOf("sd-pin") === 0) { box = el.closest(".pin"); r = box.getBoundingClientRect(); p = -r.top / Math.max(1, r.height - vh); }
