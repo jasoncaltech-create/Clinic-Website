@@ -1,0 +1,290 @@
+/* =========================================================
+   本一聯合診所 — 網站樣式
+   色彩與字型集中在下方 :root，修改這裡即可全站套用。
+   ========================================================= */
+
+:root {
+  --ivory: #F8F6F1;      /* 主要背景 */
+  --navy: #182B40;       /* 品牌主色 */
+  --gold: #B49A72;       /* 香檳金：僅用於細節裝飾 */
+  --charcoal: #333333;   /* 主要文字 */
+  --taupe: #E8E3DA;      /* 次要背景、分隔線 */
+  --white: #FFFFFF;
+  --muted: #5B5650;      /* 次要文字（對比度 AA 以上） */
+  --navy-soft: #24405E;
+
+  --font-sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --font-serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+
+  --max: 1120px;
+  --radius: 4px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--ivory);
+  color: var(--charcoal);
+  font-family: var(--font-sans);
+  font-size: 1.125rem;          /* 18px，方便長者閱讀 */
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--navy); text-underline-offset: 0.2em; }
+a:hover { color: var(--navy-soft); }
+
+:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+
+.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 1.25rem; }
+
+.skip-link {
+  position: absolute; left: 1rem; top: -4rem; z-index: 100;
+  background: var(--navy); color: var(--white); padding: 0.75rem 1.25rem; border-radius: var(--radius);
+}
+.skip-link:focus { top: 1rem; color: var(--white); }
+
+/* ---------- 頁首 ---------- */
+.site-header {
+  background: var(--ivory);
+  border-bottom: 1px solid var(--taupe);
+  position: sticky; top: 0; z-index: 50;
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; min-height: 84px;
+}
+.logo {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-serif); font-weight: 600;
+  font-size: 1.6rem; letter-spacing: 0.12em;
+  color: var(--navy); text-decoration: none; white-space: nowrap;
+}
+.logo:hover { color: var(--navy); }
+.logo img { height: 52px; width: auto; }   /* 上傳正式標誌後使用 */
+
+.main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 0.5rem; }
+.main-nav a {
+  display: block; min-width: 9.5rem; text-align: center;
+  padding: 0.7rem 1.25rem;
+  font-size: 1.125rem; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--navy); text-decoration: none;
+  border: 1px solid transparent; border-radius: var(--radius);
+}
+.main-nav a:hover { border-color: var(--taupe); background: var(--white); }
+.main-nav a[aria-current="page"] {
+  border-color: var(--navy); background: var(--navy); color: var(--white);
+}
+
+@media (max-width: 720px) {
+  .site-header { position: static; }
+  .header-inner { flex-direction: column; gap: 0.5rem; padding: 0.9rem 0 0.9rem; min-height: 0; }
+  .logo { font-size: 1.45rem; }
+  .main-nav { width: 100%; }
+  .main-nav ul { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .main-nav a { min-width: 0; padding: 0.75rem 0.5rem; border-color: var(--taupe); background: var(--white); }
+}
+
+/* ---------- 共用區塊 ---------- */
+section { padding: 4.5rem 0; }
+section.alt { background: var(--white); border-top: 1px solid var(--taupe); border-bottom: 1px solid var(--taupe); }
+@media (max-width: 720px) { section { padding: 3rem 0; } }
+
+h1, h2, h3 { color: var(--navy); line-height: 1.45; margin: 0 0 1rem; font-weight: 600; }
+h1, h2 { font-family: var(--font-serif); letter-spacing: 0.1em; }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2rem); }
+h3 { font-size: 1.3rem; letter-spacing: 0.06em; }
+
+.section-head { margin-bottom: 2.5rem; }
+.section-head::after {           /* 香檳金細線裝飾 */
+  content: ""; display: block; width: 48px; height: 1px; background: var(--gold); margin-top: 1rem;
+}
+.section-head.center { text-align: center; }
+.section-head.center::after { margin-left: auto; margin-right: auto; }
+.section-head p { color: var(--muted); margin: 0.5rem 0 0; }
+
+p { margin: 0 0 1rem; }
+.lead { font-size: 1.2rem; }
+.narrow { max-width: 46rem; }
+.note { font-size: 1rem; color: var(--muted); }
+
+/* ---------- 待確認標記（上線前請移除） ---------- */
+.todo {
+  display: inline; background: #FFF7E6; color: #6B4E16;
+  border: 1px dashed var(--gold); border-radius: 3px; padding: 0.05em 0.4em;
+  font-size: 0.95em;
+}
+
+/* ---------- 首頁 Hero ---------- */
+.hero { padding: 5rem 0 3.5rem; text-align: center; }
+.hero h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); letter-spacing: 0.2em; margin-bottom: 1.25rem; }
+.hero .divider { width: 64px; height: 1px; background: var(--gold); margin: 0 auto 1.5rem; }
+.hero .tagline { font-family: var(--font-serif); font-size: clamp(1.15rem, 2.4vw, 1.4rem); color: var(--navy); margin-bottom: 0.5rem; }
+.hero .sub { color: var(--muted); margin-bottom: 2.25rem; }
+
+.quick-info {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--taupe); background: var(--white); border-radius: var(--radius);
+  max-width: 900px; margin: 0 auto; text-align: left;
+}
+.quick-info > div { padding: 1.1rem 1.4rem; }
+.quick-info > div + div { border-left: 1px solid var(--taupe); }
+.quick-info .label { display: block; font-size: 0.95rem; color: var(--muted); letter-spacing: 0.1em; }
+.quick-info .value { font-size: 1.15rem; color: var(--navy); font-weight: 500; }
+.quick-info a { text-decoration: none; }
+.quick-info a:hover { text-decoration: underline; }
+@media (max-width: 760px) {
+  .quick-info { grid-template-columns: 1fr; }
+  .quick-info > div + div { border-left: 0; border-top: 1px solid var(--taupe); }
+}
+
+/* ---------- 部門卡片 ---------- */
+.dept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media (max-width: 760px) { .dept-grid { grid-template-columns: 1fr; } }
+.dept-card {
+  position: relative; display: flex; flex-direction: column;
+  background: var(--white); border: 1px solid var(--taupe); border-top: 3px solid var(--navy);
+  padding: 2.25rem 2rem 2rem; border-radius: var(--radius);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.dept-card:hover { border-color: var(--gold); border-top-color: var(--navy); box-shadow: 0 6px 24px rgba(24, 43, 64, 0.06); }
+.dept-card h3 { font-family: var(--font-serif); font-size: 1.6rem; letter-spacing: 0.12em; margin-bottom: 0.5rem; }
+.dept-card .services { color: var(--navy); letter-spacing: 0.08em; margin-bottom: 1rem; font-weight: 500; }
+.dept-card p { flex: 1; }
+.dept-card .more { font-weight: 500; text-decoration: none; letter-spacing: 0.1em; }
+.dept-card .more::after {      /* 讓整張卡片可點擊 */
+  content: ""; position: absolute; inset: 0;
+}
+.dept-card .more span { border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+
+/* ---------- 關於我們 ---------- */
+.about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 3rem; align-items: start; }
+@media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 2rem; } }
+.pillars { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--taupe); }
+.pillars li { padding: 1.1rem 0; border-bottom: 1px solid var(--taupe); }
+.pillars strong { display: block; color: var(--navy); font-family: var(--font-serif); font-size: 1.15rem; letter-spacing: 0.08em; }
+.pillars span { color: var(--muted); font-size: 1rem; }
+
+/* ---------- 診療項目 ---------- */
+.service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+.service {
+  background: var(--white); border: 1px solid var(--taupe); border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+}
+section.alt .service { background: var(--ivory); }
+.service h3 { font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 0.12em; }
+.service h3::after { content: ""; display: block; width: 28px; height: 1px; background: var(--gold); margin-top: 0.6rem; }
+.service p { margin: 0; }
+.other-services { margin-top: 2rem; padding: 1.25rem 1.5rem; border-left: 2px solid var(--gold); background: var(--ivory); }
+section.alt .other-services { background: var(--ivory); }
+.other-services h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.other-services ul { margin: 0; padding-left: 1.25rem; }
+
+/* ---------- 醫師介紹 ---------- */
+.doctor {
+  background: var(--white); border: 1px solid var(--taupe); border-radius: var(--radius);
+  padding: 2rem; margin-bottom: 1.5rem;
+}
+section.alt .doctor { background: var(--ivory); }
+.doctor-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1rem; margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--taupe); }
+.doctor-name h3 { font-family: var(--font-serif); font-size: 1.6rem; letter-spacing: 0.2em; margin: 0; }
+.doctor-name .title { color: var(--muted); letter-spacing: 0.1em; }
+.doctor dl { display: grid; grid-template-columns: 7rem 1fr; gap: 0.75rem 1.5rem; margin: 0; }
+.doctor dt { color: var(--navy); font-weight: 500; letter-spacing: 0.08em; }
+.doctor dd { margin: 0; }
+.doctor dd ul { margin: 0; padding-left: 1.1rem; }
+@media (max-width: 600px) {
+  .doctor { padding: 1.5rem 1.25rem; }
+  .doctor dl { grid-template-columns: 1fr; gap: 0.25rem; }
+  .doctor dd { margin-bottom: 0.75rem; }
+}
+
+/* ---------- 門診時間表 ---------- */
+.hours-table { width: 100%; max-width: 760px; border-collapse: collapse; background: var(--white); border: 1px solid var(--taupe); font-size: 1.1rem; }
+section.alt .hours-table { background: var(--ivory); }
+.hours-table caption { text-align: left; font-family: var(--font-serif); color: var(--navy); font-size: 1.2rem; font-weight: 600; letter-spacing: 0.08em; padding-bottom: 0.75rem; }
+.hours-table th, .hours-table td { padding: 0.85rem 0.9rem; border-bottom: 1px solid var(--taupe); text-align: center; }
+.hours-table thead th { background: var(--navy); color: var(--white); font-weight: 500; letter-spacing: 0.1em; }
+.hours-table tbody th { text-align: left; color: var(--navy); font-weight: 600; white-space: nowrap; }
+.hours-table .closed { color: var(--muted); }
+.hours-table .day-off td, .hours-table .day-off th { background: var(--taupe); }
+@media (max-width: 600px) {
+  .hours-table { font-size: 1rem; }
+  .hours-table th, .hours-table td { padding: 0.7rem 0.3rem; }
+  .hours-table tbody th { padding-left: 0.6rem; }
+}
+.hours-wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2.5rem; align-items: start; }
+@media (max-width: 860px) { .hours-wrap { grid-template-columns: 1fr; } }
+
+/* ---------- 常見問題 ---------- */
+.faq { max-width: 52rem; border-top: 1px solid var(--taupe); }
+.faq details { border-bottom: 1px solid var(--taupe); }
+.faq summary {
+  cursor: pointer; list-style: none; position: relative;
+  padding: 1.2rem 3rem 1.2rem 0; font-size: 1.15rem; font-weight: 500; color: var(--navy);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%);
+  font-size: 1.6rem; font-weight: 300; color: var(--gold); line-height: 1;
+}
+.faq details[open] summary::after { content: "−"; }
+.faq .answer { padding: 0 0 1.3rem; }
+.faq .answer p:last-child { margin-bottom: 0; }
+
+/* ---------- 聯絡資訊 ---------- */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 2.5rem; align-items: start; }
+@media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-list { margin: 0 0 1.75rem; display: grid; grid-template-columns: 5rem 1fr; gap: 0.9rem 1rem; }
+.contact-list dt { color: var(--muted); letter-spacing: 0.1em; }
+.contact-list dd { margin: 0; }
+.phone-link { font-size: 1.5rem; font-weight: 600; color: var(--navy); text-decoration: none; letter-spacing: 0.05em; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: 0.7rem 1.5rem; border-radius: var(--radius);
+  font-size: 1.05rem; font-weight: 500; letter-spacing: 0.08em; text-decoration: none;
+  border: 1px solid var(--navy); color: var(--navy); background: transparent;
+}
+.btn:hover { background: var(--white); }
+.btn.primary { background: var(--navy); color: var(--white); }
+.btn.primary:hover { background: var(--navy-soft); color: var(--white); }
+.map-frame { width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--taupe); border-radius: var(--radius); background: var(--taupe); }
+.map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ---------- 部門頁標題 ---------- */
+.page-hero { padding: 4rem 0 3rem; border-bottom: 1px solid var(--taupe); }
+.page-hero .eyebrow { color: var(--muted); letter-spacing: 0.15em; margin-bottom: 0.5rem; font-size: 1rem; }
+.page-hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); letter-spacing: 0.18em; margin-bottom: 1rem; }
+.page-hero .services { color: var(--navy); letter-spacing: 0.1em; font-weight: 500; margin-bottom: 1.5rem; }
+.page-hero .btn-row { margin-top: 1.5rem; }
+.in-page-nav { border-bottom: 1px solid var(--taupe); background: var(--white); }
+.in-page-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 1.75rem; }
+.in-page-nav a { display: block; padding: 0.9rem 0; text-decoration: none; color: var(--muted); font-size: 1rem; letter-spacing: 0.08em; }
+.in-page-nav a:hover { color: var(--navy); }
+
+/* ---------- 照片（選用） ---------- */
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+.photo-grid figure { margin: 0; }
+.photo-grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+.photo-grid figcaption { font-size: 0.95rem; color: var(--muted); padding-top: 0.5rem; }
+
+/* ---------- 頁尾 ---------- */
+.site-footer { background: var(--navy); color: #E9E6DF; padding: 3.5rem 0 2rem; font-size: 1rem; }
+.site-footer a { color: #FFFFFF; }
+.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; }
+@media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
+.footer-brand { font-family: var(--font-serif); font-size: 1.35rem; letter-spacing: 0.15em; color: #FFFFFF; margin-bottom: 0.75rem; }
+.footer-brand::after { content: ""; display: block; width: 36px; height: 1px; background: var(--gold); margin-top: 0.75rem; }
+.site-footer h2 { font-family: var(--font-sans); font-size: 1rem; color: #CFC6B6; letter-spacing: 0.15em; font-weight: 500; margin-bottom: 0.75rem; }
+.site-footer ul { list-style: none; margin: 0; padding: 0; }
+.site-footer li { margin-bottom: 0.4rem; }
+.site-footer p { margin: 0 0 0.4rem; }
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.15); margin-top: 2.5rem; padding-top: 1.5rem; font-size: 0.9rem; color: #CFC6B6; }
