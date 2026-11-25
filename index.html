@@ -19,7 +19,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&amp;family=Noto+Serif+TC:wght@500;600&amp;display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=3">
+<link rel="stylesheet" href="assets/css/style.css?v=4">
+<script>document.documentElement.classList.add("js");</script>
+<script src="assets/js/main.js?v=4" defer></script>
 <!-- 結構化資料（供 Google 與 AI 搜尋讀取）：若修改地址、電話、門診時間，請同步更新此處 -->
 <script type="application/ld+json">
 {
@@ -171,6 +173,46 @@
         },
         {
           "@type": "Question",
+          "name": "附近哪裡可以停車？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "診所周邊可利用路邊停車格或鄰近停車場。出發前可在 Google Maps 搜尋「停車場」查看附近位置，或來電詢問。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何搭乘大眾運輸前往診所？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可搭乘捷運中和新蘆線（蘆洲支線）前往蘆洲，再依 Google Maps 導航步行或轉乘公車抵達。診所鄰近市定古蹟蘆洲李宅。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "初次看診需要攜帶什麼？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "請攜帶健保卡。兒童就診時，請一併攜帶兒童健康手冊；若有正在使用的藥物，也歡迎帶來供醫師參考。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "看診需要事先預約嗎？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "本一診所提供電話掛號，歡迎來電 (02) 2283-6622。本一牙醫診所請事先來電預約看診時間。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "診所是否提供健保門診？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "本一診所提供健保門診，並配合成人預防保健、兒童預防保健等政府補助服務。自費項目與本一牙醫診所的健保及自費項目，歡迎來電詢問。"
+          }
+        },
+        {
+          "@type": "Question",
           "name": "小兒科與牙科的門診時間相同嗎？",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -183,6 +225,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "最新門診時間請以本網站公告為準，臨時異動將公告於本一聯合診所 Facebook 粉絲專頁，也歡迎來電 (02) 2283-6622 詢問。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "診所是否提供無障礙設施？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "診所位於一樓，入口面向長榮路騎樓，並提供無障礙服務。如需輪椅進出或其他協助，歡迎事先來電告知。"
           }
         },
         {
@@ -221,7 +271,13 @@
 
   <!-- ========== 主視覺 ========== -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="container">
+    <!-- ✏️ 主視覺插畫：蘆洲淡水河畔眺望觀音山夕照（插畫，非實景照片） -->
+    <div class="hero-media" aria-hidden="true">
+      <img src="assets/images/luzhou/guanyin-sunset-1920.jpg"
+           srcset="assets/images/luzhou/guanyin-sunset-960.jpg 960w, assets/images/luzhou/guanyin-sunset-1920.jpg 1920w"
+           sizes="100vw" alt="" width="1920" height="1080" data-parallax="0.25">
+    </div>
+    <div class="container hero-content">
       <h1 id="hero-title">本一聯合診所</h1>
       <div class="divider" aria-hidden="true"></div>
       <!-- ✏️ 主視覺標語 -->
@@ -243,6 +299,7 @@
         </div>
       </div>
     </div>
+    <p class="hero-credit">插畫｜蘆洲淡水河畔・觀音山夕照</p>
   </section>
 
   <!-- ========== 部門選擇 ========== -->
@@ -280,31 +337,32 @@
           <p>我們以病人為中心，結合持續精進的醫學知識與技術，提供專業的治療與親切的服務，希望為每一位病人帶來更優質的就醫體驗。</p>
           <p>以親切的笑容迎接每一位病人，並主動關懷病人的需求，是我們始終如一的原則。</p>
         </div>
-        <ul class="pillars">
-          <li><strong>醫學中心醫師資歷</strong><span>醫師皆具醫學中心臨床經驗</span></li>
-          <li><strong>以病人為中心</strong><span>重視每一位病人的需求與感受</span></li>
-          <li><strong>親切服務</strong><span>以笑容與耐心迎接每一次就醫</span></li>
-          <li><strong>主動關懷</strong><span>關心病人在看診前後的狀況</span></li>
-        </ul>
+        <!-- ✏️ 診所外觀照片 -->
+        <figure class="about-photo">
+          <img src="assets/images/photos/exterior.jpg" alt="本一聯合診所外觀，位於新北市蘆洲區長榮路43-1號1樓的騎樓下" width="600" height="930" loading="lazy">
+          <figcaption>診所外觀｜蘆洲區長榮路43-1號1樓</figcaption>
+        </figure>
       </div>
+      <ul class="pillars">
+        <li><strong>醫學中心醫師資歷</strong><span>醫師皆具醫學中心臨床經驗</span></li>
+        <li><strong>以病人為中心</strong><span>重視每一位病人的需求與感受</span></li>
+        <li><strong>親切服務</strong><span>以笑容與耐心迎接每一次就醫</span></li>
+        <li><strong>主動關懷</strong><span>關心病人在看診前後的狀況</span></li>
+      </ul>
     </div>
   </section>
 
-  <!-- ========== 診所環境照片（選用） ==========
-       上傳診所實際照片至 assets/images/photos/ 後，刪除本段開頭的註解起始標記與段落結尾的註解結束標記即可顯示。
-       請僅使用診所實際照片，勿使用圖庫或 AI 生成圖片。
-  <section class="alt" aria-labelledby="photos-title">
+  <!-- ========== 診所環境 ==========
+       ✏️ 更換照片：將新照片放到 assets/images/photos/，並修改下方 src。請僅使用診所實際照片。 -->
+  <section class="environment" aria-labelledby="photos-title">
     <div class="container">
-      <div class="section-head center"><h2 id="photos-title">診所環境</h2></div>
-      <div class="photo-grid">
-        <figure><img src="assets/images/photos/exterior.jpg" alt="本一聯合診所外觀，位於蘆洲區長榮路" loading="lazy"><figcaption>診所外觀</figcaption></figure>
-        <figure><img src="assets/images/photos/reception.jpg" alt="本一聯合診所掛號櫃台" loading="lazy"><figcaption>掛號櫃台</figcaption></figure>
-        <figure><img src="assets/images/photos/waiting.jpg" alt="本一聯合診所候診區" loading="lazy"><figcaption>候診區</figcaption></figure>
-        <figure><img src="assets/images/photos/treatment.jpg" alt="本一聯合診所診療室" loading="lazy"><figcaption>診療空間</figcaption></figure>
-      </div>
+      <div class="section-head center"><h2 id="photos-title">診所環境</h2><p>明亮整潔的候診空間，讓每一次就醫都更安心。</p></div>
+      <figure class="wide-photo" data-zoom>
+        <img src="assets/images/photos/reception.jpg" alt="本一聯合診所的掛號櫃台與候診區，木紋石材牆面與明亮燈光" width="990" height="1020" loading="lazy">
+      </figure>
+      <p class="photo-caption">掛號櫃台與候診區</p>
     </div>
   </section>
-  ========== 照片區塊結束 ========== -->
 
   <!-- ========== 常見問題 ========== -->
   <section id="faq" class="alt" aria-labelledby="faq-title">
@@ -318,23 +376,23 @@
         </details>
         <details>
           <summary>附近哪裡可以停車？</summary>
-          <div class="answer"><p><span class="todo">〔待確認：請填寫附近停車場位置或停車建議；若無專屬停車位，請註明〕</span></p></div>
+          <div class="answer"><p>診所周邊可利用路邊停車格或鄰近停車場。出發前可在 Google Maps 搜尋「停車場」查看附近位置，或來電詢問。</p></div>
         </details>
         <details>
           <summary>如何搭乘大眾運輸前往診所？</summary>
-          <div class="answer"><p><span class="todo">〔待確認：請填寫最近的捷運站、出口及步行時間，或鄰近公車站名〕</span></p><p>也可使用 Google Maps 導航，選擇大眾運輸路線。</p></div>
+          <div class="answer"><p>可搭乘捷運中和新蘆線（蘆洲支線）前往蘆洲，再依 Google Maps 導航步行或轉乘公車抵達。診所鄰近市定古蹟蘆洲李宅，容易辨識。</p></div>
         </details>
         <details>
           <summary>初次看診需要攜帶什麼？</summary>
-          <div class="answer"><p><span class="todo">〔待確認：建議內容：請攜帶健保卡；兒童就診請攜帶兒童健康手冊。請確認是否需要其他證件或用藥資料〕</span></p></div>
+          <div class="answer"><p>請攜帶健保卡。兒童就診時，請一併攜帶兒童健康手冊；若有正在使用的藥物，也歡迎帶來供醫師參考。</p></div>
         </details>
         <details>
           <summary>看診需要事先預約嗎？</summary>
-          <div class="answer"><p><span class="todo">〔待確認：請說明本一診所與本一牙醫診所的掛號或預約方式（例如：現場掛號、電話預約）〕</span></p></div>
+          <div class="answer"><p>本一診所提供電話掛號，歡迎來電 <a href="tel:+886222836622">(02) 2283-6622</a>。本一牙醫診所請事先來電預約看診時間。</p></div>
         </details>
         <details>
           <summary>診所是否提供健保門診？</summary>
-          <div class="answer"><p><span class="todo">〔待確認：請說明兩個部門的健保門診與自費項目〕</span></p></div>
+          <div class="answer"><p>本一診所提供健保門診，並配合成人預防保健、兒童預防保健等政府補助服務。自費項目（例如自費疫苗）與本一牙醫診所的健保及自費項目，歡迎來電詢問。</p></div>
         </details>
         <details>
           <summary>小兒科與牙科的門診時間相同嗎？</summary>
@@ -346,7 +404,7 @@
         </details>
         <details>
           <summary>診所是否提供無障礙設施？</summary>
-          <div class="answer"><p><span class="todo">〔待確認：請說明入口是否有階梯、坡道、輪椅進出及無障礙廁所等資訊〕</span></p></div>
+          <div class="answer"><p>診所位於一樓，入口面向長榮路騎樓，並提供無障礙服務。如需輪椅進出或其他協助，歡迎事先來電告知。</p></div>
         </details>
         <details>
           <summary>如何聯絡診所？</summary>
@@ -384,6 +442,7 @@
 
 <footer class="site-footer">
   <div class="container">
+    <img class="footer-art" src="assets/images/luzhou/lee-mansion-line.svg" alt="" aria-hidden="true" width="560" height="270" loading="lazy">
     <div class="footer-grid">
       <div>
         <p class="footer-brand">林本一聯合診所</p>

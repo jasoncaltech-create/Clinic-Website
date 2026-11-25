@@ -19,24 +19,23 @@ It is plain HTML and CSS with no build step, so any file you edit on GitHub goes
 
 The header and footer are repeated in all three pages. If you change the address or phone number, change it in all three files.
 
-## Before publishing: things to confirm
+## Details filled in from public sources
 
-Search every page for **待確認**. Each one is shown on the page in a dashed gold box and must be filled in or removed before the site goes public:
+The FAQ answers, services and doctor profiles were completed from the clinic's business cards, its Google listing, New Taipei City government clinic lists, and a public health-information listing. Search the pages for `✏️` if anything needs correcting. If you change an FAQ answer, also change the matching text in the `FAQPage` part of the `<script type="application/ld+json">` block near the top of `index.html`.
 
-- FAQ answers: parking, public transport, what to bring, appointments, 健保, accessibility
-- Each physician's medical/dental school (學歷) and 趙文惠院長's 專長
-- The "其他服務" lists taken from the business cards (keep or delete)
+## Images and animation
 
-When you fill in an FAQ answer, also add it to the `FAQPage` part of the `<script type="application/ld+json">` block near the top of `index.html` so Google can read it. If you change clinic hours, also update `openingHoursSpecification` in that same block of `clinic.html` and `index.html`.
+- `assets/images/photos/`: real photos of the clinic (exterior and reception), lightly retouched. Replace them with new photos using the same file names.
+- `assets/images/luzhou/`: an illustration of Guanyin Mountain at sunset seen from the Luzhou riverside, and a line drawing of the Lee Family Mansion (蘆洲李宅) used in the footer. These are drawings, not photos.
+- `assets/images/bg/`: subtle textures.
+- `assets/js/main.js`: gentle fade-in and parallax effects while scrolling. They switch off automatically for visitors who turn on "reduce motion" in their device settings.
 
-## Background images
-
-The soft backgrounds (window light with leaf shadows, a fine linen texture, and a row of thin gold arches) are drawn in code as SVG files in `assets/images/bg/`. They are abstract on purpose, so nobody mistakes them for photos of the clinic. To remove one, delete its `url("../images/bg/...")` line in `assets/css/style.css`.
+After changing the CSS or JS, increase the `?v=` number where `style.css` and `main.js` are linked in each page, so browsers load the new version immediately.
 
 ## Logo and photos
 
 - **Logo:** upload it as `assets/images/logo.png`, then follow the comment next to `class="logo"` in each page.
-- **Photos:** see `assets/images/photos/README.md`. The site looks complete without them.
+- **More photos:** see `assets/images/photos/README.md`.
 
 ## Publishing with GitHub Pages
 

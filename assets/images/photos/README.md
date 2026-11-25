@@ -1,12 +1,8 @@
 # 診所照片 Clinic photos
 
-Put real photos of the clinic here (exterior, reception, waiting area, treatment rooms).
-Use these file names so the page picks them up automatically:
+Real photos of the clinic used on the homepage:
 
-- exterior.jpg — 診所外觀
-- reception.jpg — 掛號櫃台
-- waiting.jpg — 候診區
-- treatment.jpg — 診療空間
+- `exterior.jpg`: 診所外觀 (about section)
+- `reception.jpg`: 掛號櫃台與候診區 (診所環境 section)
 
-Then open `index.html`, find the block that starts with `診所環境照片（選用）`, and remove the comment markers around it.
-Only use actual photos of the clinic: no stock or AI-generated images.
+To swap a photo, upload a new one with the same file name. Use only real photos of the clinic, not stock or AI-generated images.
