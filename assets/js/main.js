@@ -1,4 +1,4 @@
-/* 本一聯合診所 — 捲動效果與地圖載入
+/* 本一聯合診所 — 捲動效果
    - 開啟「減少動態效果」時不執行任何動畫，內容直接顯示。
    - 若此檔案無法載入，頁首的安全機制會在 2.5 秒後讓所有內容正常顯示。 */
 (function () {
@@ -9,7 +9,6 @@
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce || !("IntersectionObserver" in window)) {
     root.classList.remove("js");
-    setupMap();
     return;
   }
 
@@ -27,7 +26,7 @@
   var groups = [
     ".section-head", ".dept-card", ".pillars li", ".service", ".other-services", ".doctor", ".hours-wrap > div",
     ".call-note", ".faq details", ".contact-grid > *", ".quick-info", ".about-text > p", ".intro-text > p",
-    ".narrow > p", ".photo", ".map-frame"
+    ".narrow > p", ".photo", ".map-frame", ".dir-list > div", ".dir-actions"
   ];
   var targets = [];
   groups.forEach(function (sel) {
@@ -80,7 +79,6 @@
     root.classList.add("fx");
   }
 
-  setupMap();
 
   /* 3. 換頁轉場的備援：瀏覽器若不支援 CSS 換頁轉場，點選站內連結時先讓頁面淡出再前往 */
   if (!("CSSViewTransitionRule" in window)) {
@@ -97,23 +95,4 @@
     window.addEventListener("pageshow", function () { document.body.classList.remove("is-leaving"); });
   }
 
-  /* 4. 地圖：點選後才在頁面中載入 Google 地圖 */
-  function setupMap() {
-    document.querySelectorAll("a.map-frame[data-embed]").forEach(function (link) {
-      link.addEventListener("click", function (e) {
-        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
-        e.preventDefault();
-        var box = document.createElement("div");
-        box.className = link.className.replace("is-visible", "") + " is-visible";
-        var frame = document.createElement("iframe");
-        frame.src = link.getAttribute("data-embed");
-        frame.title = link.getAttribute("data-title") || "Google 地圖";
-        frame.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
-        frame.setAttribute("allowfullscreen", "");
-        box.appendChild(frame);
-        link.replaceWith(box);
-        frame.focus();
-      });
-    });
-  }
 })();

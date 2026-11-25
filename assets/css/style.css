@@ -253,10 +253,23 @@ p { margin: 0 0 1rem; }
 .wide-photo { width: min(1320px, calc(100% - 2rem)); margin: 0 auto; }
 @media (max-width: 720px) { .wide-photo .photo-inner img { aspect-ratio: 4 / 3; } }
 
-/* ---------- 診所環境（固定畫面＋照片放大） ---------- */
-.pin-photo { width: min(1200px, calc(100% - 2rem)); margin: 0 auto; }
-.pin-photo img { aspect-ratio: 16 / 9; object-position: center 40%; }
-@media (max-width: 720px) { .pin-photo img { aspect-ratio: 4 / 5; } }
+/* ---------- 交通指引：診所外觀照片＋抵達方式 ---------- */
+.dir-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.dir-photo { margin: 0; }
+.dir-photo img { aspect-ratio: 4 / 5; object-position: center 35%; }
+.dir-photo .photo-caption { width: fit-content; margin: 1rem auto 0; padding: 0.15rem 0.9rem; border-radius: 999px; background: var(--panel); color: var(--muted); }
+.dir-text { background: var(--panel); border-radius: var(--radius-lg); padding: clamp(1.5rem, 3.5vw, 2.75rem); box-shadow: var(--shadow); }
+.dir-text .section-head { margin-bottom: 1.5rem; }
+.dir-text .section-head p { color: var(--navy); }
+.dir-list { margin: 0 0 1.75rem; display: grid; gap: 1.1rem; }
+.dir-list > div { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: 1rem; }
+.dir-list dt { color: var(--muted); letter-spacing: 0.1em; font-weight: 500; }
+.dir-list dd { margin: 0; }
+@media (max-width: 860px) {
+  .dir-grid { grid-template-columns: 1fr; }
+  .dir-photo { max-width: 460px; width: 100%; justify-self: center; }
+  .dir-list > div { grid-template-columns: 1fr; gap: 0.1rem; }
+}
 
 /* ---------- 診療項目 ---------- */
 .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
@@ -340,15 +353,11 @@ p { margin: 0 0 1rem; }
 .storefront { max-width: 460px; justify-self: center; width: 100%; }
 .storefront .photo-caption { color: var(--on-night-muted); }
 
-/* 地圖：點選後才載入 Google 地圖（節省流量）；未執行 JavaScript 時直接開啟 Google Maps */
+/* 地圖：直接嵌入 Google 地圖，捲動到附近時才載入（loading="lazy"） */
 .map-frame { display: block; width: 100%; aspect-ratio: 16 / 7; margin-top: clamp(3rem, 6vw, 5rem); border-radius: var(--radius-lg); overflow: hidden; position: relative;
-  background: radial-gradient(ellipse 60% 70% at 50% 60%, rgba(244, 234, 223, 0.12), rgba(244, 234, 223, 0) 70%), #22384F; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3); }
+  background: #22384F; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3); }
 .map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
-a.map-frame { text-decoration: none; display: grid; place-items: center; }
-a.map-frame::before { content: ""; position: absolute; inset: 0; background-color: #F4EADF; opacity: 0.35;
-  -webkit-mask: url("../images/bg/ripples.svg") center / 1600px 170px repeat; mask: url("../images/bg/ripples.svg") center / 1600px 170px repeat; }
-a.map-frame span { position: relative; padding: 0.8rem 1.9rem; border-radius: 999px; background: var(--on-night); color: var(--navy); font-weight: 500; letter-spacing: 0.1em; transition: transform 0.3s var(--ease); }
-a.map-frame:hover span { transform: scale(1.04); }
+.map-frame.in-grid { margin-top: 0; aspect-ratio: 4 / 3; }
 @media (max-width: 720px) { .map-frame { aspect-ratio: 4 / 3; } }
 
 .site-footer { background: var(--night-sky); color: var(--on-night-muted); padding: 2rem 0 2.5rem; font-size: 1rem; }
@@ -386,7 +395,7 @@ a.map-frame:hover span { transform: scale(1.04); }
 
 /* --- 進場（時間型） --- */
 .js main :where(.dept-card, .pillars li, .service, .other-services, .doctor, .hours-wrap > div, .call-note,
-  .faq details, .contact-grid > *, .quick-info, .about-text > p, .intro-text > p, .narrow > p, .photo, .map-frame) {
+  .faq details, .contact-grid > *, .quick-info, .about-text > p, .intro-text > p, .narrow > p, .photo, .map-frame, .dir-list > div, .dir-actions) {
   opacity: 0; transform: translate3d(0, 64px, 0);
   transition: opacity 1s var(--ease) var(--d, 0s), transform 1.2s var(--ease) var(--d, 0s);
 }
@@ -410,7 +419,7 @@ a.map-frame:hover span { transform: scale(1.04); }
 /* --- 與捲動同步（.fx） --- */
 .fx .sky-scene .sky, .fx .sun-x, .fx .sun-y, .fx .glint-x, .fx .night-veil, .fx .land-back, .fx .land-reeds,
 .fx .hero-content, .fx .page-hero-grid, .fx .hero-credit, .fx .grow .photo-inner,
-.fx .pin-stage .section-head, .fx .pin-photo .photo-inner, .fx .pin-photo .photo-caption {
+.fx .pin .photo-inner, .fx .pin .dir-list > div, .fx .pin .dir-actions {
   animation-duration: 1s; animation-timing-function: linear; animation-fill-mode: both;
 }
 .fx .sky-noon { animation-name: sd-day-noon; }
@@ -451,21 +460,25 @@ a.map-frame:hover span { transform: scale(1.04); }
 @keyframes sd-hero-fade { 0% { opacity: 1; } 25%, 100% { opacity: 0; } }
 @keyframes sd-grow { from { opacity: 0.35; transform: scale(0.72); } to { opacity: 1; transform: none; } }
 
-/* 固定畫面：「診所環境」停留在畫面中，照片由小放大，標題淡出、說明淡入 */
-.fx .pin { height: 210vh; padding: 0; }
-.fx .pin-stage { position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); overflow: hidden; display: grid; place-items: center; }
-.fx .pin-stage .section-head { position: absolute; top: clamp(1.5rem, 7vh, 4.5rem); left: 0; right: 0; margin: 0; animation-name: sd-pin-head; }
-.fx .pin-photo { width: min(1200px, calc(100vw - 2rem), calc((100vh - var(--header-h) - 3rem) * 16 / 9)); }
-.fx .pin-photo .photo-inner { animation-name: sd-pin-photo; transform-origin: 50% 50%; }
-.fx .pin-photo .photo-caption { position: absolute; left: 0; right: 0; bottom: 1.25rem; margin: 0; animation-name: sd-pin-cap; }
-.fx .pin-photo .photo-caption span { background: rgba(255, 255, 255, 0.88); color: var(--navy); padding: 0.45rem 1.3rem; border-radius: 999px; }
-@media (max-width: 720px) {
-  .fx .pin { height: 180vh; }
-  .fx .pin-photo { width: min(calc(100vw - 2rem), calc((100vh - var(--header-h) - 2rem) * 4 / 5)); }
+/* 固定畫面：「交通指引」停留在畫面中，診所外觀照片由小放大，抵達方式依序出現。
+   手機或較矮的畫面不固定，改為照片進入畫面時放大（.grow）、說明依序淡入。 */
+@media (min-width: 861px) and (min-height: 700px) {
+  .fx .pin { height: 230vh; padding: 0; }
+  .fx .pin-stage { position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); display: grid; align-items: center; }
+  .fx .dir-photo img { max-height: calc(100vh - var(--header-h) - 7rem); width: auto; margin: 0 auto; }
+  .fx .pin .dir-photo .photo-inner { animation-name: sd-pin-photo; transform-origin: 50% 60%; }
+  .fx .pin .dir-list > div:nth-child(1) { animation-name: sd-pin-i1; }
+  .fx .pin .dir-list > div:nth-child(2) { animation-name: sd-pin-i2; }
+  .fx .pin .dir-list > div:nth-child(3) { animation-name: sd-pin-i3; }
+  .fx .pin .dir-list > div:nth-child(4) { animation-name: sd-pin-i4; }
+  .fx .pin .dir-actions { animation-name: sd-pin-i5; }
 }
-@keyframes sd-pin-head { 0%, 30% { opacity: 1; transform: none; } 55%, 100% { opacity: 0; transform: translate3d(0, -48px, 0); } }
-@keyframes sd-pin-photo { 0% { transform: translate3d(0, 24%, 0) scale(0.52); } 62%, 100% { transform: none; } }
-@keyframes sd-pin-cap { 0%, 58% { opacity: 0; transform: translate3d(0, 24px, 0); } 78%, 100% { opacity: 1; transform: none; } }
+@keyframes sd-pin-photo { 0% { transform: translate3d(0, 8%, 0) scale(0.7); } 55%, 100% { transform: none; } }
+@keyframes sd-pin-i1 { 0%, 16% { opacity: 0; transform: translate3d(0, 28px, 0); } 30%, 100% { opacity: 1; transform: none; } }
+@keyframes sd-pin-i2 { 0%, 26% { opacity: 0; transform: translate3d(0, 28px, 0); } 40%, 100% { opacity: 1; transform: none; } }
+@keyframes sd-pin-i3 { 0%, 36% { opacity: 0; transform: translate3d(0, 28px, 0); } 50%, 100% { opacity: 1; transform: none; } }
+@keyframes sd-pin-i4 { 0%, 46% { opacity: 0; transform: translate3d(0, 28px, 0); } 60%, 100% { opacity: 1; transform: none; } }
+@keyframes sd-pin-i5 { 0%, 56% { opacity: 0; transform: translate3d(0, 28px, 0); } 70%, 100% { opacity: 1; transform: none; } }
 
 /* 原生支援時以 CSS 驅動；main.js 改用備援方式時會加上 .fx-js，此段即不套用 */
 @supports (animation-timeline: scroll()) and (timeline-scope: --a) {
@@ -479,13 +492,13 @@ a.map-frame:hover span { transform: scale(1.04); }
   .fx:not(.fx-js) .grow { view-timeline: --grow block; }
   .fx:not(.fx-js) .grow .photo-inner { animation-timeline: --grow; animation-range: entry 0% cover 50%; }
   .fx:not(.fx-js) .pin { view-timeline: --pin block; }
-  .fx:not(.fx-js) .pin-stage .section-head, .fx:not(.fx-js) .pin-photo .photo-inner, .fx:not(.fx-js) .pin-photo .photo-caption { animation-timeline: --pin; animation-range: contain 0% contain 100%; }
+  .fx:not(.fx-js) .pin .dir-photo .photo-inner, .fx:not(.fx-js) .pin .dir-list > div, .fx:not(.fx-js) .pin .dir-actions { animation-timeline: --pin; animation-range: contain 0% contain 100%; }
 }
 
 /* 開啟「減少動態效果」：全部靜態顯示 */
 @media (prefers-reduced-motion: reduce) {
   .js main :is(.dept-card, .pillars li, .service, .other-services, .doctor, .hours-wrap > div, .call-note, .faq details,
-    .contact-grid > *, .quick-info, .about-text > p, .intro-text > p, .narrow > p, .photo, .map-frame, .section-head h2, .section-head h2 .ln, .section-head p),
+    .contact-grid > *, .quick-info, .about-text > p, .intro-text > p, .narrow > p, .photo, .map-frame, .dir-list > div, .dir-actions, .section-head h2, .section-head h2 .ln, .section-head p),
   .js main .section-head::before, .js .hero-content > *, .js .page-hero-grid > *, .js .tagline .ln {
     opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important;
   }
