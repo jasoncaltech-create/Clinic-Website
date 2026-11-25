@@ -47,9 +47,11 @@
   targets.forEach(function (el) { io.observe(el); });
 
   /* 2. 與捲動同步的效果（視差、天色、照片放大、固定畫面） */
-  root.classList.add("fx");
   var native = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()") && !/[?&]fxfallback/.test(location.search);
-  if (!native && document.getAnimations) {
+  if (!native && !document.getAnimations) {
+    // 太舊的瀏覽器：不做與捲動同步的效果，內容照常顯示
+  } else if (!native) {
+    root.classList.add("fx", "fx-js");
     // 不支援 CSS scroll-driven animations 的瀏覽器：暫停 CSS 動畫，依捲動位置設定進度
     var anims = document.getAnimations().filter(function (a) { return a.animationName && a.animationName.indexOf("sd-") === 0; });
     anims.forEach(function (a) { a.pause(); });
@@ -71,6 +73,8 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     update();
+  } else {
+    root.classList.add("fx");
   }
 
   setupMap();

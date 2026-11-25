@@ -443,13 +443,14 @@ a.map-frame:hover span { transform: scale(1.04); }
 @keyframes sd-pin-photo { 0% { transform: translate3d(0, 24%, 0) scale(0.52); } 62%, 100% { transform: none; } }
 @keyframes sd-pin-cap { 0%, 58% { opacity: 0; transform: translate3d(0, 24px, 0); } 78%, 100% { opacity: 1; transform: none; } }
 
+/* 原生支援時以 CSS 驅動；main.js 改用備援方式時會加上 .fx-js，此段即不套用 */
 @supports (animation-timeline: scroll()) {
-  .fx body::before, .fx body::after { animation-timeline: scroll(root); }
-  .fx .scene > i, .fx .hero-content, .fx .page-hero-grid, .fx .hero-credit { animation-timeline: scroll(root); animation-range: 0 100vh; }
-  .fx .grow { view-timeline: --grow block; }
-  .fx .grow .photo-inner { animation-timeline: --grow; animation-range: entry 0% cover 50%; }
-  .fx .pin { view-timeline: --pin block; }
-  .fx .pin-stage .section-head, .fx .pin-photo .photo-inner, .fx .pin-photo .photo-caption { animation-timeline: --pin; animation-range: contain 0% contain 100%; }
+  .fx:not(.fx-js) body::before, .fx:not(.fx-js) body::after { animation-timeline: scroll(root); }
+  .fx:not(.fx-js) .scene > i, .fx:not(.fx-js) .hero-content, .fx:not(.fx-js) .page-hero-grid, .fx:not(.fx-js) .hero-credit { animation-timeline: scroll(root); animation-range: 0 100vh; }
+  .fx:not(.fx-js) .grow { view-timeline: --grow block; }
+  .fx:not(.fx-js) .grow .photo-inner { animation-timeline: --grow; animation-range: entry 0% cover 50%; }
+  .fx:not(.fx-js) .pin { view-timeline: --pin block; }
+  .fx:not(.fx-js) .pin-stage .section-head, .fx:not(.fx-js) .pin-photo .photo-inner, .fx:not(.fx-js) .pin-photo .photo-caption { animation-timeline: --pin; animation-range: contain 0% contain 100%; }
 }
 
 /* 開啟「減少動態效果」：全部靜態顯示 */
