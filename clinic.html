@@ -19,9 +19,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&amp;display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=5">
+<link rel="stylesheet" href="assets/css/style.css?v=6">
 <script>document.documentElement.classList.add("js");</script>
-<script src="assets/js/main.js?v=5" defer></script>
+<script src="assets/js/main.js?v=6" defer></script>
 <!-- 結構化資料（供 Google 與 AI 搜尋讀取）：若修改地址、電話、門診時間，請同步更新此處 -->
 <script type="application/ld+json">
 {
@@ -158,8 +158,10 @@
         <a class="btn" href="#hours">查看門診時間</a>
       </div>
       </div>
+      <!-- ✏️ 情境照片（圖庫示意照，非本院實景） -->
       <figure class="page-hero-photo">
-        <img src="assets/images/photos/exterior.jpg" alt="本一聯合診所外觀，位於新北市蘆洲區長榮路43-1號1樓" width="600" height="930" fetchpriority="high">
+        <img src="assets/images/photos/child-care.jpg" alt="示意圖：媽媽陪伴下，醫護人員細心為孩子貼上OK繃" width="1200" height="799" fetchpriority="high">
+        <figcaption class="photo-note">示意圖</figcaption>
       </figure>
     </div>
   </section>
@@ -178,11 +180,18 @@
 
   <!-- ========== 診所介紹 ========== -->
   <section id="intro" aria-labelledby="intro-title">
-    <div class="container narrow">
+    <div class="container intro-grid">
+      <div>
       <div class="section-head"><h2 id="intro-title">診所介紹</h2></div>
       <!-- ✏️ 診所介紹 -->
       <p class="lead">本一診所位於新北市蘆洲區，由醫學中心講師級資深小兒專科主治醫師林本一院長看診，並具感染症專科資格。</p>
       <p>從孩子的成長照護到全家人的日常健康，我們以耐心傾聽、清楚說明為原則，陪伴每一個家庭安心就醫。</p>
+      </div>
+      <!-- ✏️ 情境照片（圖庫示意照，非本院實景） -->
+      <figure class="intro-photo">
+        <img src="assets/images/photos/senior-care.jpg" alt="示意圖：醫護人員握著年長病人的手，親切關懷" width="960" height="640" loading="lazy">
+        <figcaption class="photo-note">示意圖</figcaption>
+      </figure>
     </div>
   </section>
 

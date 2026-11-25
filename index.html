@@ -19,9 +19,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&amp;display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=5">
+<link rel="stylesheet" href="assets/css/style.css?v=6">
 <script>document.documentElement.classList.add("js");</script>
-<script src="assets/js/main.js?v=5" defer></script>
+<script src="assets/js/main.js?v=6" defer></script>
 <!-- 結構化資料（供 Google 與 AI 搜尋讀取）：若修改地址、電話、門診時間，請同步更新此處 -->
 <script type="application/ld+json">
 {
@@ -283,9 +283,9 @@
             <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=%E6%96%B0%E5%8C%97%E5%B8%82%E8%98%86%E6%B4%B2%E5%8D%80%E9%95%B7%E6%A6%AE%E8%B7%AF43-1%E8%99%9F" target="_blank" rel="noopener">Google Maps 導航</a>
           </div>
         </div>
-        <!-- ✏️ 主視覺照片：診所實景 -->
+        <!-- ✏️ 主視覺照片：診所外觀（實景照片，已校正為正面角度） -->
         <div class="hero-visual">
-          <img class="photo-main" src="assets/images/photos/reception.jpg" alt="本一聯合診所明亮的掛號櫃台與候診區" width="990" height="1020" fetchpriority="high">
+          <img class="photo-main" src="assets/images/photos/exterior.jpg" alt="本一聯合診所正面外觀，位於新北市蘆洲區長榮路43-1號1樓" width="708" height="900" fetchpriority="high">
         </div>
       </div>
 
@@ -332,20 +332,13 @@
   <!-- ========== 關於我們 ========== -->
   <section id="about" aria-labelledby="about-title">
     <div class="container">
-      <div class="about-grid">
-        <div>
+      <div class="about-text">
           <div class="section-head"><h2 id="about-title">關於我們</h2></div>
           <!-- ✏️ 關於我們內文 -->
           <p class="lead">本一聯合診所位於新北市蘆洲區，由具醫學中心資歷的醫師團隊組成。</p>
           <p>本一診所由醫學中心講師級資深小兒專科主治醫師看診，並具感染症專科資格；本一牙醫診所則由具醫學中心主治醫師資歷的資深牙科醫師看診。</p>
           <p>我們以病人為中心，結合持續精進的醫學知識與技術，提供專業的治療與親切的服務，希望為每一位病人帶來更優質的就醫體驗。</p>
           <p>以親切的笑容迎接每一位病人，並主動關懷病人的需求，是我們始終如一的原則。</p>
-        </div>
-        <!-- ✏️ 診所外觀照片 -->
-        <figure class="about-photo">
-          <img src="assets/images/photos/exterior.jpg" alt="本一聯合診所外觀，位於新北市蘆洲區長榮路43-1號1樓的騎樓下" width="600" height="930" loading="lazy">
-          <figcaption>診所外觀｜蘆洲區長榮路43-1號1樓</figcaption>
-        </figure>
       </div>
       <ul class="pillars">
         <li><strong>醫學中心醫師資歷</strong><span>醫師皆具醫學中心臨床經驗</span></li>
@@ -353,6 +346,21 @@
         <li><strong>親切服務</strong><span>以笑容與耐心迎接每一次就醫</span></li>
         <li><strong>主動關懷</strong><span>關心病人在看診前後的狀況</span></li>
       </ul>
+    </div>
+  </section>
+
+  <!-- ========== 診所環境 ========== -->
+  <section id="environment" class="env-section" aria-labelledby="env-title">
+    <div class="container">
+      <div class="section-head center">
+        <h2 id="env-title">診所環境</h2>
+        <p>明亮、整潔的候診空間，讓每一次就醫都更安心</p>
+      </div>
+      <!-- ✏️ 診所環境照片（實景照片） -->
+      <figure class="wide-photo" data-zoom>
+        <img src="assets/images/photos/interior.jpg" alt="本一聯合診所的掛號櫃台與候診區，空間明亮整潔" width="1010" height="707" loading="lazy">
+      </figure>
+      <p class="photo-caption">掛號櫃台與候診區</p>
     </div>
   </section>
 
