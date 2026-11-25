@@ -5,13 +5,14 @@ It is plain HTML and CSS with no build step, so any file you edit on GitHub goes
 
 | File | Page |
 | --- | --- |
-| `index.html` | 聯合診所首頁 (hero, departments, 關於我們, 診所環境, 常見問題, 聯絡資訊) |
+| `index.html` | 聯合診所首頁 (hero, departments, 關於我們, 交通指引, 常見問題, 聯絡資訊) |
 | `clinic.html` | 本一診所 |
 | `dental.html` | 本一牙醫診所 |
 | `404.html` | Page shown for a wrong address |
 | `assets/css/style.css` | Colours, fonts, layout and scroll effects for every page |
-| `assets/js/main.js` | Scroll effects and the tap-to-load map |
-| `sitemap.xml`, `robots.txt` | For Google |
+| `assets/js/main.js` | Scroll effects and the 本一診所 「今日門診」 strip |
+| `sitemap.xml`, `robots.txt` | For Google and AI assistants |
+| `llms.txt` | A plain-text fact sheet for AI assistants (names, address, hours, services, doctors) |
 
 ## How to edit text
 
@@ -20,7 +21,11 @@ It is plain HTML and CSS with no build step, so any file you edit on GitHub goes
 3. Change only the Chinese text between the tags, then click **Commit changes**.
 
 The header and footer are repeated in all three pages. If you change the address or phone number, change it in all three files.
-If you change an FAQ answer, also change the matching text in the `FAQPage` part of the `<script type="application/ld+json">` block near the top of `index.html`. If you change clinic hours, also change `openingHoursSpecification` in the same kind of block in `clinic.html` and `index.html`.
+Each page's `<script type="application/ld+json">` block near the top describes the page for Google and AI assistants. Keep it in step with the page:
+
+- **FAQ answers:** each page has its own FAQ. If you change an answer, change the matching text in that page's `FAQPage` block.
+- **本一診所 hours:** change the hours table in `clinic.html`, the `openingHoursSpecification` in its `<script>` block, the 「週六、週日也有看診」 and 「夜診」 tags (in `clinic.html` and on the homepage card), and the hours in `llms.txt`. The 「今日門診」 strip reads the table itself, so it needs no change.
+- **Address, phone, doctors or services:** also update `llms.txt`.
 
 ## Details filled in from public sources
 
@@ -28,23 +33,24 @@ The FAQ answers, services and doctor profiles were completed from the clinic's b
 
 ## Design
 
-- **Time of day:** the homepage opens on an illustration of the Tamsui River and Guanyin Mountain at sunset. As you scroll down, the background moves from sunset (warm sand) to dusk (dusty rose) and twilight (soft mauve), and the contact section and footer are the navy evening. The two department pages start at dusk.
-- **Illustration:** `assets/images/scene/` holds the sky, mountains, river and reeds as separate SVG layers, so they can move at different speeds while scrolling. `assets/images/bg/` holds the faint mountain, river, reed and star line art in the section backgrounds.
+- **One background, morning to night:** every page sits in front of the same illustration of the Tamsui River and Guanyin Mountain (`assets/images/scene/`). As you scroll, the sun rises on the left, is high at noon and sets behind Guanyin Mountain on the right, while the sky moves through morning, noon, golden afternoon and sunset colours. When 聯絡資訊 comes into view it becomes night, with stars and a moon, through the footer. The sky colours are set in `assets/css/style.css` under 「背景插畫」.
+- **Two audiences:** 本一牙醫診所 is spacious, slower and expert-led (credentials under the title, treatment blocks with 診療流程, a 來電預約諮詢 button). 本一診所 is brighter and quicker: a 「今日門診」 strip under the title shows today's hours and whether the clinic is open (Taipei time, read from the hours table), and phones get a bottom bar with 來電掛號 and Google Maps 導航.
 - **Colours and fonts** are set at the top of `assets/css/style.css`. Headings use Noto Serif TC; body text uses Noto Sans TC.
 
 ## Scroll effects
 
-- The hero layers move at different speeds and the headline scales down and fades. Section headings rise in line by line, cards arrive one after another, wide photos grow from a small card, and 診所環境 stays on screen while the waiting-room photo expands.
+- The sun and sky follow your scroll position (see Design). In the first screen the mountains and reeds settle lower and the headline scales down and fades. Section headings rise in line by line, cards arrive one after another, the wide dental illustration grows from a small card, and on desktop 交通指引 stays on screen while the storefront photo grows and the directions appear.
 - Browsers that support CSS scroll-driven animations run the effects in CSS. In other browsers, `main.js` drives the same animations.
-- Visitors who turn on "reduce motion" in their device settings see everything without animation. If JavaScript fails, all content still appears.
+- Visitors who turn on "reduce motion" in their device settings see a still morning scene and no animation; 聯絡資訊 is still night. If JavaScript fails, all content still appears.
+- The Google map is embedded on every page and loads as the visitor scrolls near it.
 - Moving between pages fades the old page out and slides the new one in.
 
-After changing the CSS or JS, increase the `?v=` number where `style.css` and `main.js` are linked in each page (currently `v=9`), so browsers load the new version immediately.
+After changing the CSS or JS, increase the `?v=` number where `style.css` and `main.js` are linked in each page (currently `v=10`), so browsers load the new version immediately.
 
 ## Images
 
-- `assets/images/photos/`: the clinic's real photos. The storefront appears in the 聯絡資訊 section of every page so patients can recognise the building; the waiting room appears in 診所環境. See `assets/images/photos/README.md`.
-- `assets/images/generated/`: placeholders for generated interior images, each labelled 示意圖 on the page. `PROMPTS.md` there has one prompt per image with its aspect ratio and file name. Generate the image, save it with the same file name, and commit.
+- `assets/images/photos/`: the clinic's real storefront photo, shown in the homepage 交通指引 and in 聯絡資訊 on the two clinic pages so patients can recognise the building. See `assets/images/photos/README.md`.
+- `assets/images/generated/`: illustrated stand-ins of doctors, a dentist and patients, each labelled 示意圖 on the page. `PROMPTS.md` there has one prompt per image with its aspect ratio and file name. Generate a polished version, save it with the same file name, and commit.
 - `assets/images/og.jpg`: the preview image shown when the site is shared on LINE or Facebook.
 - `assets/images/icons/` and `favicon.ico`: browser and home-screen icons.
 

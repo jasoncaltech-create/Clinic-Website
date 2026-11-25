@@ -334,7 +334,7 @@ p { margin: 0 0 1rem; }
     linear-gradient(180deg, rgba(14, 24, 40, 0) 0, rgba(14, 24, 40, 0.6) 7rem, rgba(14, 24, 40, 0.95) 11rem, var(--night-sky) 14rem, var(--night-sky) 100%);
 }
 /* 有捲動效果時，夜空由背景插畫呈現 */
-.fx .evening { background: linear-gradient(180deg, rgba(9, 15, 26, 0) 0, rgba(9, 15, 26, 0.28) 16rem); }
+.fx .evening { background: linear-gradient(180deg, rgba(9, 15, 26, 0) 0, rgba(9, 15, 26, 0.5) 12rem, rgba(9, 15, 26, 0.62) 20rem); }
 .evening h2, .evening h3 { color: var(--on-night); }
 .evening .section-head p, .evening .photo-caption { color: var(--on-night-muted); }
 .evening a { color: var(--on-night); }
@@ -370,7 +370,7 @@ p { margin: 0 0 1rem; }
 .site-footer li { margin-bottom: 0.4rem; }
 .site-footer p { margin: 0 0 0.4rem; }
 .footer-bottom { margin-top: 2.5rem; font-size: 0.9rem; }
-.fx .site-footer { background: rgba(9, 15, 26, 0.5); }
+.fx .site-footer { background: rgba(9, 15, 26, 0.84); }
 
 /* ---------- 部門頁主視覺 ---------- */
 .page-hero { min-height: 88svh; margin-top: calc(-1 * var(--header-h)); padding: calc(var(--header-h) + clamp(2.5rem, 8vh, 5rem)) 0 clamp(7rem, 16vh, 10rem); display: flex; align-items: center; overflow: hidden; }
