@@ -12,7 +12,9 @@
   var groups = [
     ".section-head", ".dept-card", ".about-grid > div", ".about-photo", ".pillars li",
     ".service", ".other-services", ".doctor", ".hours-wrap > div", ".call-note",
-    ".faq details", ".contact-grid > *", ".photo-caption", ".narrow > p", ".about-text > p", ".intro-grid > *"
+    ".faq details", ".contact-grid > *", ".photo-caption", ".narrow > p", ".about-text > p", ".intro-grid > *",
+    /* 本一牙醫診所頁面（dental.html）的編號清單與照片 */
+    ".svc-list li", ".svc-photo"
   ];
   var targets = [];
   groups.forEach(function (sel) {
