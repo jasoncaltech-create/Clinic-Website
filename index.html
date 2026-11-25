@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- ✏️ 頁面標題與搜尋結果描述 -->
-<title>本一聯合診所｜蘆洲小兒科・感染科・耳鼻喉・牙醫診所</title>
+<title>本一聯合診所｜新北市蘆洲區・本一診所與本一牙醫診所</title>
 <meta name="description" content="本一聯合診所位於新北市蘆洲區長榮路，設有本一診所（小兒科、感染科、耳鼻喉、成人慢性病）與本一牙醫診所（微創植牙、數位矯正、全瓷美學），由具醫學中心資歷的醫師看診。">
 <link rel="canonical" href="https://pyclinic.com/">
 <meta name="robots" content="index, follow">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:site_name" content="本一聯合診所">
-<meta property="og:title" content="本一聯合診所｜蘆洲小兒科・感染科・耳鼻喉・牙醫診所">
+<meta property="og:title" content="本一聯合診所｜新北市蘆洲區・本一診所與本一牙醫診所">
 <meta property="og:description" content="本一聯合診所位於新北市蘆洲區長榮路，設有本一診所（小兒科、感染科、耳鼻喉、成人慢性病）與本一牙醫診所（微創植牙、數位矯正、全瓷美學），由具醫學中心資歷的醫師看診。">
 <meta property="og:url" content="https://pyclinic.com/">
 <link rel="icon" href="assets/images/icons/favicon.svg" type="image/svg+xml">
@@ -40,7 +40,10 @@
       "@type": "MedicalClinic",
       "@id": "https://pyclinic.com/#organization",
       "name": "本一聯合診所",
-      "alternateName": "林本一聯合診所",
+      "alternateName": [
+        "林本一聯合診所",
+        "Pen Yi Joint Clinic"
+      ],
       "url": "https://pyclinic.com/",
       "telephone": "+886-2-2283-6622",
       "address": {
@@ -52,8 +55,22 @@
         "addressCountry": "TW"
       },
       "areaServed": [
-        "新北市蘆洲區",
-        "新北市"
+        {
+          "@type": "AdministrativeArea",
+          "name": "新北市蘆洲區"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "新北市三重區"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "新北市五股區"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "新北市新莊區"
+        }
       ],
       "sameAs": [
         "https://www.facebook.com/people/%E6%9C%AC%E4%B8%80%E8%81%AF%E5%90%88%E8%A8%BA%E6%89%80/61555037387643/"
@@ -77,92 +94,31 @@
         "https://pyclinic.com/assets/images/photos/exterior.jpg",
         "https://pyclinic.com/assets/images/og.jpg"
       ],
-      "logo": "https://pyclinic.com/assets/images/icons/icon-512.png"
+      "logo": "https://pyclinic.com/assets/images/icons/icon-512.png",
+      "description": "本一聯合診所位於新北市蘆洲區長榮路，設有本一診所（小兒科、感染科、耳鼻喉、成人慢性病）與本一牙醫診所（微創植牙、數位矯正、全瓷美學），由具醫學中心資歷的醫師看診。",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 25.0828287,
+        "longitude": 121.4628265
+      }
     },
     {
       "@type": "MedicalClinic",
       "@id": "https://pyclinic.com/clinic.html#clinic",
       "name": "本一診所",
       "url": "https://pyclinic.com/clinic.html",
-      "telephone": "+886-2-2283-6622",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "長榮路43-1號1樓",
-        "addressLocality": "蘆洲區",
-        "addressRegion": "新北市",
-        "postalCode": "247",
-        "addressCountry": "TW"
-      },
-      "medicalSpecialty": [
-        "Pediatric",
-        "Infectious",
-        "Otolaryngologic",
-        "PrimaryCare"
-      ],
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-          ],
-          "opens": "08:30",
-          "closes": "12:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-          ],
-          "opens": "15:00",
-          "closes": "18:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "18:30",
-          "closes": "20:30"
-        }
-      ],
       "parentOrganization": {
         "@id": "https://pyclinic.com/#organization"
-      },
-      "image": "https://pyclinic.com/assets/images/photos/exterior.jpg"
+      }
     },
     {
       "@type": "Dentist",
       "@id": "https://pyclinic.com/dental.html#dental",
       "name": "本一牙醫診所",
-      "alternateName": "Pen Yi Dental Clinic",
       "url": "https://pyclinic.com/dental.html",
-      "telephone": "+886-2-2283-6622",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "長榮路43-1號1樓",
-        "addressLocality": "蘆洲區",
-        "addressRegion": "新北市",
-        "postalCode": "247",
-        "addressCountry": "TW"
-      },
-      "medicalSpecialty": "Dentistry",
       "parentOrganization": {
         "@id": "https://pyclinic.com/#organization"
-      },
-      "image": "https://pyclinic.com/assets/images/photos/exterior.jpg"
+      }
     },
     {
       "@type": "WebSite",
