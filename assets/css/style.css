@@ -473,6 +473,8 @@ p { margin: 0 0 1rem; }
   .fx .pin .dir-list > div:nth-child(4) { animation-name: sd-pin-i4; }
   .fx .pin .dir-actions { animation-name: sd-pin-i5; }
 }
+/* 手機上主視覺的照片在第一個畫面下方：不套用淡出，讓插畫完整出現 */
+@media (max-width: 860px) { .fx .page-hero-grid { animation-name: none; } }
 @keyframes sd-pin-photo { 0% { transform: translate3d(0, 8%, 0) scale(0.7); } 55%, 100% { transform: none; } }
 @keyframes sd-pin-i1 { 0%, 16% { opacity: 0; transform: translate3d(0, 28px, 0); } 30%, 100% { opacity: 1; transform: none; } }
 @keyframes sd-pin-i2 { 0%, 26% { opacity: 0; transform: translate3d(0, 28px, 0); } 40%, 100% { opacity: 1; transform: none; } }
@@ -531,3 +533,80 @@ p { margin: 0 0 1rem; }
 @media (prefers-reduced-motion: reduce) {
   .js main .service .service-icon { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+/* =========================================================
+   兩個部門頁：同一套主題，牙醫診所偏沉穩精緻（自費、重視專業），本一診所偏明亮快速（家庭、看診量）
+   ========================================================= */
+
+/* ---------- 本一牙醫診所：留白多、節奏慢、以醫師專業為先 ---------- */
+.page-dental { line-height: 2; }
+.page-dental section { padding: clamp(7rem, 14vw, 13rem) 0; }
+.page-dental h2 { font-size: clamp(2.4rem, 5.8vw, 4.2rem); letter-spacing: 0.16em; }
+.page-dental .section-head::before { width: 72px; height: 1px; }
+.page-dental :is(.service, .other-services, .doctor, .call-note, .intro-text, .faq details, .hours-wrap > div:last-child) {
+  background: rgba(250, 246, 249, 0.9); border-top: 1px solid rgba(201, 164, 106, 0.75);
+  box-shadow: 0 1px 2px rgba(46, 36, 56, 0.05), 0 24px 60px rgba(46, 36, 56, 0.1);
+}
+.page-dental .intro-text p { max-width: 34em; }
+.js .page-dental main :where(.service, .other-services, .doctor, .call-note, .intro-text > p, .faq details, .photo, .section-head p) { transition-duration: 1.5s, 1.7s; }
+/* 院長資歷：主視覺下方 */
+.cred-strip { margin: 0 0 2rem; padding: 1.2rem 1.5rem; max-width: 34rem; border-radius: var(--radius); background: rgba(24, 43, 64, 0.93);
+  color: var(--on-night); border-top: 1px solid rgba(201, 164, 106, 0.9); box-shadow: var(--shadow); }
+.cred-name { margin: 0 0 0.45rem; font-family: var(--font-serif); font-size: 1.15rem; letter-spacing: 0.2em; color: #EAD7B4; }
+.cred-strip ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.2rem; font-size: 1rem; line-height: 1.7; }
+.cred-strip li::before { content: ""; display: inline-block; width: 14px; height: 1px; margin-right: 0.65rem; vertical-align: middle; background: var(--gold); }
+/* 診療項目：每項一個寬敞的區塊，右側為診療流程 */
+.page-dental .treatments { grid-template-columns: 1fr; gap: 2rem; }
+.treatment { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 4vw, 3.5rem); padding: clamp(2rem, 4vw, 3.25rem); }
+.treatment .treatment-main h3 { font-size: 1.9rem; }
+.process h4 { margin: 0 0 1rem; font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; letter-spacing: 0.16em; color: var(--navy); }
+.process ol { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.process li { counter-increment: step; display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); align-items: center; line-height: 1.6; }
+.process li::before { content: counter(step); width: 1.8rem; height: 1.8rem; border-radius: 50%; border: 1px solid var(--gold); color: #7F6337;
+  font-family: var(--font-serif); font-size: 0.9rem; line-height: 1.75rem; text-align: center; }
+@media (max-width: 860px) { .treatment { grid-template-columns: 1fr; } }
+
+/* ---------- 本一診所：明亮、親切、資訊一眼可見 ---------- */
+.page-clinic section { padding: clamp(4rem, 8vw, 7rem) 0; }
+.page-clinic h2 { font-size: clamp(2rem, 4.6vw, 3.1rem); }
+.page-clinic :is(.service, .other-services, .doctor, .intro-text, .faq details, .hours-wrap > div:last-child) { background: rgba(255, 255, 255, 0.93); border-radius: 26px; }
+.page-clinic .hours-table { border-radius: 22px; }
+.js .page-clinic main :where(.service, .other-services, .doctor, .hours-wrap > div, .intro-text > p, .faq details, .photo, .section-head p) { transition-duration: 0.7s, 0.8s; }
+/* 今日門診 */
+.today { margin-top: 1.5rem; display: grid; gap: 0.65rem; width: fit-content; max-width: 100%; padding: 1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.92); border-radius: 22px; box-shadow: var(--shadow); }
+.today-now { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.8rem; margin: 0; }
+.today-now[hidden] { display: none; }
+.today-label { font-weight: 600; color: var(--navy); letter-spacing: 0.08em; }
+.today-hours { color: var(--ink); font-variant-numeric: tabular-nums; }
+.today-status { padding: 0.1rem 0.75rem; border-radius: 999px; font-size: 0.95rem; font-weight: 500; background: #E6EEF2; color: #24425C; }
+.today-status.open { background: #DFF0E3; color: #1E5532; }
+.today-status.closed { background: #F3E2DE; color: #7A3B2E; }
+.today-note { margin: 0; font-size: 0.9rem; color: var(--muted); }
+.badges { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.badges li, .badge, .chips li, .page-clinic .other-services li { display: inline-block; padding: 0.3rem 0.95rem; border-radius: 999px; font-size: 0.98rem; font-weight: 500; line-height: 1.6; }
+.badges li, .badge, .page-clinic .other-services li { background: #FCE9D9; color: #6B3F25; }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chips li { background: #E8F0F3; color: var(--navy); }
+.bring { margin-top: 1.5rem; }
+.bring h3 { font-size: 1.15rem; margin-bottom: 0.6rem; }
+.page-clinic .other-services ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+/* 手機底部快捷列：來電掛號、Google Maps 導航 */
+.call-bar { display: none; }
+@media (max-width: 860px) {
+  .call-bar { display: flex; gap: 0.6rem; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    padding: 0.6rem max(1rem, env(safe-area-inset-right)) calc(0.6rem + env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    background: rgba(250, 246, 240, 0.95); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(24, 43, 64, 0.08); box-shadow: 0 -8px 24px rgba(24, 43, 64, 0.08); }
+  .call-bar .btn { flex: 1; min-height: 50px; padding: 0.5rem 0.6rem; font-size: 0.98rem; letter-spacing: 0; white-space: nowrap; }
+  .page-clinic { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+}
+
+/* ---------- 首頁部門卡片：牙醫沉穩深色、本一診所明亮 ---------- */
+.dept-dental { background: linear-gradient(160deg, #1E2F48 0%, #2B3251 100%); border-top: 1px solid rgba(201, 164, 106, 0.85); }
+.dept-dental h3 { color: var(--on-night); }
+.dept-dental .services { color: #E7D3AD; }
+.dept-dental p { color: #E3E7EE; }
+.dept-dental .more { background: var(--on-night); color: var(--navy); }
+.dept-clinic { background: rgba(255, 255, 255, 0.95); }
+.dept-card .badge { flex: none; align-self: flex-start; margin: 0 0 1rem; }

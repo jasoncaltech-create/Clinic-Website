@@ -137,7 +137,7 @@
 }
 </script>
 </head>
-<body>
+<body class="page-clinic">
 <a class="skip-link" href="#main">跳至主要內容</a>
 <!-- 背景插畫：蘆洲淡水河畔與觀音山，捲動時太陽由早晨移到黃昏，到「聯絡資訊」成為夜晚（assets/css/style.css「背景插畫」） -->
 <div class="sky-scene" aria-hidden="true">
@@ -177,6 +177,15 @@
         <a class="btn primary" href="tel:+886222836622">來電 (02) 2283-6622</a>
         <a class="btn" href="#hours">查看門診時間</a>
       </div>
+      <!-- ✏️ 今日門診：依下方「門診時間」表格與台北時間自動顯示；兩個標籤請與門診時間一致 -->
+      <div class="today">
+        <p class="today-now" hidden><span class="today-label">今日門診</span><span class="today-hours"></span><span class="today-status"></span></p>
+        <ul class="badges">
+          <li>週六、週日也有看診</li>
+          <li>夜診 週一、二、四、五 18:30–20:30</li>
+        </ul>
+        <p class="today-note">國定假日門診以 Facebook 公告為準</p>
+      </div>
       </div>
       <!-- ✏️ 生成示意圖（非本院實景）：替換 assets/images/generated/clinic-hero.jpg 即可，提示詞見 assets/images/generated/PROMPTS.md -->
       <figure class="photo ratio-4x3">
@@ -189,29 +198,50 @@
   <nav class="in-page-nav" aria-label="本頁內容">
     <div class="container">
       <ul>
-        <li><a href="#intro">診所介紹</a></li>
-        <li><a href="#services">診療項目</a></li>
-        <li><a href="#doctors">醫師介紹</a></li>
         <li><a href="#hours">門診時間</a></li>
+        <li><a href="#services">診療項目</a></li>
+        <li><a href="#intro">診所介紹</a></li>
+        <li><a href="#doctors">醫師介紹</a></li>
         <li><a href="#contact">聯絡資訊</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- ========== 診所介紹 ========== -->
-  <section id="intro" aria-labelledby="intro-title">
-    <div class="container intro-grid">
-      <div class="intro-text">
-      <div class="section-head"><h2 id="intro-title">診所介紹</h2></div>
-      <!-- ✏️ 診所介紹 -->
-      <p class="lead">本一診所位於新北市蘆洲區，由醫學中心講師級資深小兒專科主治醫師林本一院長看診，並具感染症專科資格。</p>
-      <p>從孩子的成長照護到全家人的日常健康，我們以耐心傾聽、清楚說明為原則，陪伴每一個家庭安心就醫。</p>
+  <!-- ========== 門診時間 ========== -->
+  <section id="hours" aria-labelledby="hours-title">
+    <div class="container">
+      <div class="section-head"><h2 id="hours-title">門診時間</h2></div>
+      <div class="hours-wrap">
+        <div>
+          <!-- ✏️ 本一診所門診時間：修改後請同步更新頁首 <script type="application/ld+json"> 內的 openingHoursSpecification -->
+        <table class="hours-table">
+          <caption>本一診所門診時間</caption>
+          <thead><tr><th scope="col">星期</th><th scope="col">上午</th><th scope="col">下午</th><th scope="col">晚上</th></tr></thead>
+          <tbody>
+          <tr><th scope="row">星期一</th><td>08:30–12:00</td><td>15:00–18:00</td><td>18:30–20:30</td></tr>
+          <tr><th scope="row">星期二</th><td>08:30–12:00</td><td>15:00–18:00</td><td>18:30–20:30</td></tr>
+          <tr class="day-off"><th scope="row">星期三</th><td class="closed">休診</td><td class="closed">休診</td><td class="closed">休診</td></tr>
+          <tr><th scope="row">星期四</th><td>08:30–12:00</td><td>15:00–18:00</td><td>18:30–20:30</td></tr>
+          <tr><th scope="row">星期五</th><td>08:30–12:00</td><td>15:00–18:00</td><td>18:30–20:30</td></tr>
+          <tr><th scope="row">星期六</th><td>08:30–12:00</td><td>15:00–18:00</td><td class="closed">休診</td></tr>
+          <tr><th scope="row">星期日</th><td>08:30–12:00</td><td>15:00–18:00</td><td class="closed">休診</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div>
+          <p>每週三全日休診，週六、週日無夜間門診。</p>
+          <!-- ✏️ 初診需攜帶（內容取自首頁「常見問題」） -->
+          <div class="bring">
+            <h3>初診需攜帶</h3>
+            <ul class="chips">
+              <li>健保卡</li>
+              <li>兒童健康手冊（兒童就診時）</li>
+              <li>正在使用的藥物（如有）</li>
+            </ul>
+          </div>
+          <p class="note">如遇國定假日或臨時異動，將公告於 <a href="https://www.facebook.com/people/%E6%9C%AC%E4%B8%80%E8%81%AF%E5%90%88%E8%A8%BA%E6%89%80/61555037387643/" target="_blank" rel="noopener">Facebook 粉絲專頁</a>，亦歡迎來電詢問。</p>
+        </div>
       </div>
-      <!-- ✏️ 生成示意圖（非本院實景）：替換 assets/images/generated/clinic-intro.jpg 即可，提示詞見 assets/images/generated/PROMPTS.md -->
-      <figure class="photo ratio-4x3">
-        <img src="assets/images/generated/clinic-intro.jpg" alt="示意圖：醫師為長輩量血壓，兩人面帶微笑" width="1200" height="900" loading="lazy">
-        <figcaption class="photo-note">示意圖</figcaption>
-      </figure>
     </div>
   </section>
 
@@ -257,6 +287,23 @@
     </div>
   </section>
 
+  <!-- ========== 診所介紹 ========== -->
+  <section id="intro" aria-labelledby="intro-title">
+    <div class="container intro-grid">
+      <div class="intro-text">
+      <div class="section-head"><h2 id="intro-title">診所介紹</h2></div>
+      <!-- ✏️ 診所介紹 -->
+      <p class="lead">本一診所位於新北市蘆洲區，由醫學中心講師級資深小兒專科主治醫師林本一院長看診，並具感染症專科資格。</p>
+      <p>從孩子的成長照護到全家人的日常健康，我們以耐心傾聽、清楚說明為原則，陪伴每一個家庭安心就醫。</p>
+      </div>
+      <!-- ✏️ 生成示意圖（非本院實景）：替換 assets/images/generated/clinic-intro.jpg 即可，提示詞見 assets/images/generated/PROMPTS.md -->
+      <figure class="photo ratio-4x3">
+        <img src="assets/images/generated/clinic-intro.jpg" alt="示意圖：醫師為長輩量血壓，兩人面帶微笑" width="1200" height="900" loading="lazy">
+        <figcaption class="photo-note">示意圖</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- ========== 醫師介紹 ========== -->
   <section id="doctors" aria-labelledby="doctors-title">
     <div class="container">
@@ -293,35 +340,6 @@
     </div>
   </section>
 
-  <!-- ========== 門診時間 ========== -->
-  <section id="hours" aria-labelledby="hours-title">
-    <div class="container">
-      <div class="section-head"><h2 id="hours-title">門診時間</h2></div>
-      <div class="hours-wrap">
-        <div>
-          <!-- ✏️ 本一診所門診時間：修改後請同步更新頁首 <script type="application/ld+json"> 內的 openingHoursSpecification -->
-        <table class="hours-table">
-          <caption>本一診所門診時間</caption>
-          <thead><tr><th scope="col">星期</th><th scope="col">上午</th><th scope="col">下午</th><th scope="col">晚上</th></tr></thead>
-          <tbody>
-          <tr><th scope="row">星期一</th><td>08:30–12:00</td><td>15:00–18:00</td><td>18:30–20:30</td></tr>
-          <tr><th scope="row">星期二</th><td>08:30–12:00</td><td>15:00–18:00</td><td>18:30–20:30</td></tr>
-          <tr class="day-off"><th scope="row">星期三</th><td class="closed">休診</td><td class="closed">休診</td><td class="closed">休診</td></tr>
-          <tr><th scope="row">星期四</th><td>08:30–12:00</td><td>15:00–18:00</td><td>18:30–20:30</td></tr>
-          <tr><th scope="row">星期五</th><td>08:30–12:00</td><td>15:00–18:00</td><td>18:30–20:30</td></tr>
-          <tr><th scope="row">星期六</th><td>08:30–12:00</td><td>15:00–18:00</td><td class="closed">休診</td></tr>
-          <tr><th scope="row">星期日</th><td>08:30–12:00</td><td>15:00–18:00</td><td class="closed">休診</td></tr>
-          </tbody>
-        </table>
-        </div>
-        <div>
-          <p>每週三全日休診，週六、週日無夜間門診。</p>
-          <p class="note">如遇國定假日或臨時異動，將公告於 <a href="https://www.facebook.com/people/%E6%9C%AC%E4%B8%80%E8%81%AF%E5%90%88%E8%A8%BA%E6%89%80/61555037387643/" target="_blank" rel="noopener">Facebook 粉絲專頁</a>，亦歡迎來電詢問。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
 </div><!-- /daylight -->
 
   <!-- ========== 聯絡資訊 ========== -->
@@ -355,6 +373,12 @@
   </section>
 
 </main>
+
+<!-- 手機版底部快捷列（僅本一診所頁面；桌機不顯示） -->
+<nav class="call-bar" aria-label="快速聯絡">
+  <a class="btn primary" href="tel:+886222836622">來電掛號</a>
+  <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=%E6%96%B0%E5%8C%97%E5%B8%82%E8%98%86%E6%B4%B2%E5%8D%80%E9%95%B7%E6%A6%AE%E8%B7%AF43-1%E8%99%9F" target="_blank" rel="noopener">Google Maps 導航</a>
+</nav>
 
 <footer class="site-footer">
   <div class="container">

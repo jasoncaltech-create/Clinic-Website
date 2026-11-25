@@ -96,3 +96,44 @@
   }
 
 })();
+
+/* 4. 本一診所「今日門診」：依頁面上的門診時間表格與台北時間，顯示今天的時段與目前狀態
+   （測試用：網址加上 ?now=2026-11-25T10:00 可模擬台北時間） */
+(function () {
+  "use strict";
+  var box = document.querySelector(".today-now");
+  var body = document.querySelector(".hours-table tbody");
+  if (!box || !body || !window.Intl) return;
+  var day, mins;
+  var q = /[?&]now=(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(location.search);
+  if (q) {
+    day = new Date(Date.UTC(+q[1], +q[2] - 1, +q[3])).getUTCDay();
+    mins = +q[4] * 60 + +q[5];
+  } else {
+    var parts = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Taipei", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
+    var get = function (t) { for (var i = 0; i < parts.length; i++) { if (parts[i].type === t) return parts[i].value; } return ""; };
+    day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday"));
+    mins = (+get("hour") % 24) * 60 + +get("minute");
+  }
+  var row = body.querySelectorAll("tr")[(day + 6) % 7];   // 表格由星期一排到星期日
+  if (!row) return;
+  var sessions = [];
+  row.querySelectorAll("td").forEach(function (td) {
+    var m = /(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/.exec(td.textContent);
+    if (m) sessions.push({ text: m[1] + ":" + m[2] + "–" + m[3] + ":" + m[4], start: +m[1] * 60 + +m[2], end: +m[3] * 60 + +m[4], from: m[1] + ":" + m[2], to: m[3] + ":" + m[4] });
+  });
+  var status, cls;
+  if (!sessions.length) { status = "今日休診"; cls = "closed"; }
+  else {
+    var cur = sessions.filter(function (s) { return mins >= s.start && mins < s.end; })[0];
+    var next = sessions.filter(function (s) { return mins < s.start; })[0];
+    if (cur) { status = "看診中・至 " + cur.to; cls = "open"; }
+    else if (next) { status = "休息中・下一診 " + next.from; cls = "wait"; }
+    else { status = "今日門診已結束"; cls = "closed"; }
+  }
+  box.querySelector(".today-hours").textContent = sessions.map(function (s) { return s.text; }).join("、");
+  var st = box.querySelector(".today-status");
+  st.textContent = status;
+  st.className = "today-status " + cls;
+  box.hidden = false;
+})();
