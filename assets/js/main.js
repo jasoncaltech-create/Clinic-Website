@@ -1,27 +1,40 @@
-/* 本一聯合診所 — 捲動時的淡入與視差效果
-   若使用者在系統中開啟「減少動態效果」，所有動畫都會停用，內容直接顯示。 */
+/* 本一聯合診所 — 捲動效果與地圖載入
+   - 開啟「減少動態效果」時不執行任何動畫，內容直接顯示。
+   - 若此檔案無法載入，頁首的安全機制會在 2.5 秒後讓所有內容正常顯示。 */
 (function () {
   "use strict";
+  var root = document.documentElement;
+  window.__pyReady = true;
+
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce || !("IntersectionObserver" in window)) {
-    document.documentElement.classList.remove("js");
+    root.classList.remove("js");
+    setupMap();
     return;
   }
 
-  /* 1. 捲動淡入：元素進入畫面時由下往上浮現，同一組內依序出現 */
+  /* 1. 進場效果：標題逐行浮現，卡片依序出現 */
+  document.querySelectorAll("main .section-head h2").forEach(function (h) {
+    if (h.children.length) return;
+    var span = document.createElement("span");
+    span.className = "ln";
+    span.textContent = h.textContent;
+    h.textContent = "";
+    h.appendChild(span);
+    h.classList.add("split");
+  });
+
   var groups = [
-    ".section-head", ".dept-card", ".about-grid > div", ".about-photo", ".pillars li",
-    ".service", ".other-services", ".doctor", ".hours-wrap > div", ".call-note",
-    ".faq details", ".contact-grid > *", ".photo-caption", ".narrow > p", ".about-text > p", ".intro-grid > *"
+    ".section-head", ".dept-card", ".pillars li", ".service", ".other-services", ".doctor", ".hours-wrap > div",
+    ".call-note", ".faq details", ".contact-grid > *", ".quick-info", ".about-text > p", ".intro-text > p",
+    ".narrow > p", ".photo", ".map-frame"
   ];
   var targets = [];
   groups.forEach(function (sel) {
-    var els = document.querySelectorAll("main " + sel);
     var lastParent = null, i = 0;
-    els.forEach(function (el) {
+    document.querySelectorAll("main " + sel).forEach(function (el) {
       if (el.parentNode !== lastParent) { lastParent = el.parentNode; i = 0; }
-      el.classList.add("reveal");
-      el.style.setProperty("--d", Math.min(i, 6) * 0.08 + "s");
+      el.style.setProperty("--d", Math.min(i, 5) * 0.14 + "s");
       i++;
       targets.push(el);
     });
@@ -30,53 +43,70 @@
     entries.forEach(function (e) {
       if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
     });
-  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.15 });
   targets.forEach(function (el) { io.observe(el); });
 
-  /* 2. 主視覺視差與照片縮放 */
-  var parallax = Array.prototype.slice.call(document.querySelectorAll("[data-parallax]"));
-  var zooms = Array.prototype.slice.call(document.querySelectorAll("[data-zoom]"));
-  var ticking = false;
-  function update() {
-    ticking = false;
-    var vh = window.innerHeight;
-    parallax.forEach(function (img) {
-      var r = img.parentNode.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > vh) return;
-      var f = parseFloat(img.getAttribute("data-parallax")) || 0.2;
-      img.style.transform = "translate3d(0," + (-r.top * f).toFixed(1) + "px,0)";
+  /* 2. 與捲動同步的效果（視差、天色、照片放大、固定畫面） */
+  root.classList.add("fx");
+  var native = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()") && !/[?&]fxfallback/.test(location.search);
+  if (!native && document.getAnimations) {
+    // 不支援 CSS scroll-driven animations 的瀏覽器：暫停 CSS 動畫，依捲動位置設定進度
+    var anims = document.getAnimations().filter(function (a) { return a.animationName && a.animationName.indexOf("sd-") === 0; });
+    anims.forEach(function (a) { a.pause(); });
+    var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+    var ticking = false;
+    var update = function () {
+      ticking = false;
+      var y = window.scrollY, vh = window.innerHeight, max = root.scrollHeight - vh;
+      anims.forEach(function (a) {
+        var n = a.animationName, el = a.effect && a.effect.target, p = 0, box, r;
+        if (n.indexOf("sd-sky") === 0) p = max > 0 ? y / max : 0;
+        else if (n.indexOf("sd-hero") === 0) p = y / vh;
+        else if (n === "sd-grow") { r = el.closest(".grow").getBoundingClientRect(); p = (vh - r.top) / ((vh + r.height) / 2); }
+        else if (n.indexOf("sd-pin") === 0) { box = el.closest(".pin"); r = box.getBoundingClientRect(); p = -r.top / Math.max(1, r.height - vh); }
+        a.currentTime = clamp(p) * 1000 - 0.001;
+      });
+    };
+    var onScroll = function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  }
+
+  setupMap();
+
+  /* 3. 換頁轉場的備援：瀏覽器若不支援 CSS 換頁轉場，點選站內連結時先讓頁面淡出再前往 */
+  if (!("CSSViewTransitionRule" in window)) {
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href]");
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (a.target && a.target !== "_self") return;
+      var url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      e.preventDefault();
+      document.body.classList.add("is-leaving");
+      setTimeout(function () { location.href = url.href; }, 260);
     });
-    zooms.forEach(function (fig) {
-      var r = fig.getBoundingClientRect();
-      // 0 when the photo's top enters the bottom of the screen, 1 when its centre reaches the middle
-      var p = (vh - r.top) / (vh * 0.5 + r.height * 0.5);
-      p = Math.max(0, Math.min(1, p));
-      var s = 0.86 + 0.14 * p;
-      fig.style.setProperty("--zoom", s.toFixed(4));
-      fig.style.setProperty("--radius", (24 - 18 * p).toFixed(1) + "px");
+    window.addEventListener("pageshow", function () { document.body.classList.remove("is-leaving"); });
+  }
+
+  /* 4. 地圖：點選後才在頁面中載入 Google 地圖 */
+  function setupMap() {
+    document.querySelectorAll("a.map-frame[data-embed]").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        var box = document.createElement("div");
+        box.className = link.className.replace("is-visible", "") + " is-visible";
+        var frame = document.createElement("iframe");
+        frame.src = link.getAttribute("data-embed");
+        frame.title = link.getAttribute("data-title") || "Google 地圖";
+        frame.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+        frame.setAttribute("allowfullscreen", "");
+        box.appendChild(frame);
+        link.replaceWith(box);
+        frame.focus();
+      });
     });
   }
-  function onScroll() { if (!ticking) { ticking = true; window.requestAnimationFrame(update); } }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-  update();
-})();
-
-/* 3. 換頁轉場的備援：瀏覽器若不支援 CSS 換頁轉場，點選站內連結時先讓頁面淡出再前往 */
-(function () {
-  "use strict";
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce || "CSSViewTransitionRule" in window) return;
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest && e.target.closest("a[href]");
-    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    if (a.target && a.target !== "_self") return;
-    var url = new URL(a.href, location.href);
-    if (url.origin !== location.origin || url.pathname === location.pathname) return;
-    e.preventDefault();
-    document.body.classList.add("is-leaving");
-    setTimeout(function () { location.href = url.href; }, 260);
-  });
-  // 按「上一頁」回到此頁時，恢復顯示
-  window.addEventListener("pageshow", function () { document.body.classList.remove("is-leaving"); });
 })();
