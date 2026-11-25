@@ -1,46 +1,55 @@
 # 生成示意圖：提示詞與檔名 Image-generation prompts
 
-The images in this folder are **illustrated stand-ins**: landscapes of Guanyin Mountain, the Tamsui River and reeds, drawn in the same style as the homepage illustration. They are still meant to be replaced. Generate each image below, then save it **with exactly the same file name** in this folder, replacing the stand-in. Nothing else needs to change; the pages already point to these files.
+The images in this folder are **illustrated stand-ins**: simple flat-vector drawings of doctors, a dentist and patients, made for this site. They are still meant to be replaced by more polished versions. Generate each image below, then save it **with exactly the same file name** in this folder, replacing the stand-in. Nothing else needs to change; the pages already point to these files.
 
-All of these images are shown on the site with a small **示意圖** (illustration) label, because they are not photos of the real clinic. Keep that label. Only remove it if you replace an image with a real photo of the clinic.
+All of these images are shown on the site with a small **示意圖** (illustration) label, because they are not photos of the real clinic or its staff. Keep that label.
+
+The two clinics use two related styles:
+
+- **本一診所** (families, high volume): warm, cute and playful.
+- **本一牙醫診所** (premium, self-pay): the same flat-vector family, but refined and grown-up.
 
 ## Shared style (add to every prompt)
 
-> Architectural interior photography, bright and calm, warm late-afternoon natural light, soft shadows, light oak wood, warm white walls, beige travertine or limestone, linen textures, a few green plants, minimal and uncluttered, premium private-clinic atmosphere, muted warm palette (sand, soft rose, cream), shallow depth of field, photorealistic, high detail. **No people, no faces, no hands, no text, no logos, no signage, no medical brand names.**
+> Flat vector illustration, soft rounded shapes, no outlines, gentle shading, warm and calm. Palette: warm sand, cream, dusty rose, mauve, deep navy, small champagne-gold accents, a little sage green for plants. Simple friendly faces. A window in the background shows a soft view of a mountain by a river. Generic people who do not resemble any real person. **No text, no letters, no logos, no needles, no blood, no instruments inside a mouth.**
 
-Negative prompt (if your tool has one): `people, person, face, hands, text, letters, watermark, logo, signage, clutter, harsh light, cold blue light, hospital ward, surgical equipment close-up, blood, needles`
+Negative prompt (if your tool has one): `text, letters, watermark, logo, needle, syringe, blood, open mouth with instruments, scary, clinical close-up, harsh light, photorealistic`
+
+**本一診所 style (add to its prompts):**
+
+> Cute and playful: big round heads, dot eyes, small smiles, rosy cheeks, chunky rounded bodies, cheerful warm colours.
+
+**本一牙醫診所 style (add to its prompts):**
+
+> Refined and elegant: slim adult proportions, small heads, calm poses, minimal faces (closed smiling eyes, small smile), lots of empty space, palette weighted toward mauve, navy and champagne gold, premium private-practice mood.
 
 ## Slots
 
-| File name | Aspect ratio | Size to save | Where it appears |
-| --- | --- | --- | --- |
-| `about.jpg` | 3:4 (portrait) | 1200 × 1600 | 首頁「關於我們」 |
-| `clinic-hero.jpg` | 4:3 | 1600 × 1200 | 本一診所 頁面上方 |
-| `clinic-intro.jpg` | 4:3 | 1600 × 1200 | 本一診所「診所介紹」 |
-| `clinic-wide.jpg` | 16:9 | 1920 × 1080 | 本一診所「醫師介紹」上方，捲動時放大 |
-| `dental-hero.jpg` | 4:3 | 1600 × 1200 | 本一牙醫診所 頁面上方 |
-| `dental-intro.jpg` | 4:3 | 1600 × 1200 | 本一牙醫診所「診所介紹」 |
-| `dental-wide.jpg` | 16:9 | 1920 × 1080 | 本一牙醫診所「醫師介紹」上方，捲動時放大 |
+| File name | Aspect ratio | Size to save | Where it appears | Style |
+| --- | --- | --- | --- | --- |
+| `about.jpg` | 3:4 (portrait) | 1200 × 1600 | 首頁「關於我們」 | between the two |
+| `clinic-hero.jpg` | 4:3 | 1600 × 1200 | 本一診所 頁面上方 | 本一診所 |
+| `clinic-intro.jpg` | 4:3 | 1600 × 1200 | 本一診所「診所介紹」 | 本一診所 |
+| `dental-hero.jpg` | 4:3 | 1600 × 1200 | 本一牙醫診所 頁面上方 | 本一牙醫診所 |
+| `dental-intro.jpg` | 4:3 | 1600 × 1200 | 本一牙醫診所「診所介紹」 | 本一牙醫診所 |
+| `dental-wide.jpg` | 16:9 | 1920 × 1080 | 本一牙醫診所，捲動時放大 | 本一牙醫診所 |
 
-Save as JPEG at about 80% quality; try to keep each file under 300 KB. On phones, the 16:9 images are cropped to 4:3 from the centre, so keep the main subject near the middle.
+Save as JPEG at about 80% quality; try to keep each file under 300 KB. On phones, `dental-wide.jpg` is cropped to 4:3 from the centre, so keep the people and the screen near the middle.
 
 ### about.jpg (3:4)
-> A serene clinic waiting lounge seen from a low angle: a curved light-oak bench with linen cushions, a tall window with sheer curtains letting in warm afternoon sun, a travertine side table with a small ceramic vase and a single branch, soft shadows across a warm white wall. [shared style]
+> A friendly doctor in a white coat with a stethoscope and a dentist in a white coat stand on the right, smiling and waving to welcome a family on the left: a grandparent with grey hair and glasses, a parent, and a small child holding the parent's hand and waving back. A tall arched window behind them shows a mountain by a river at sunset. [shared style] Medium proportions, halfway between cute and refined.
 
 ### clinic-hero.jpg (4:3)
-> A bright, welcoming family-medicine consultation room: a light-oak desk with rounded edges, two soft upholstered chairs, a small child-height stool in pale wood, large window with warm daylight, a potted olive tree, warm white walls and a beige stone floor. Calm and reassuring, nothing clinical in the foreground. [shared style]
+> A pediatrician in a white coat, sitting on a round stool, gently listens to a small child's heartbeat with a stethoscope. The child sits on a padded bench, smiling; the parent stands behind with a hand on the child's shoulder. Small hearts float above. An arched window shows a mountain by a river. [shared style] [本一診所 style]
 
 ### clinic-intro.jpg (4:3)
-> A quiet corner of a modern clinic waiting area: wooden shelves with a few picture books and a plant, a soft rounded armchair, warm sunlight falling in diagonal stripes across a limestone floor, gentle and homely. [shared style]
-
-### clinic-wide.jpg (16:9)
-> A wide view of a calm clinic corridor at golden hour: light-oak wall panels, a long bench, travertine floor, warm sunlight streaming through tall windows and casting long soft shadows, a sense of space and quiet. Keep the centre of the image visually interesting (it is cropped to 4:3 on phones). [shared style]
+> A doctor in a white coat checks an older adult's blood pressure at a small round table: a soft cuff on the patient's upper arm connected to a small monitor. The older adult has grey hair in a bun and round glasses; both are smiling at each other. A plant and an arched window behind. [shared style] [本一診所 style]
 
 ### dental-hero.jpg (4:3)
-> A refined, minimal dental treatment room: a modern dental chair in warm white and soft beige, light-oak cabinetry, a large window with soft daylight, clean surfaces, no instruments in close-up, calm spa-like mood. [shared style]
+> A relaxed adult patient sits in a modern, sleek dental chair, holding up a hand mirror and smiling at their reflection. A slim dentist in a white coat stands beside the chair, gesturing kindly. A large window with a mountain view, a slim olive tree, a minimal overhead lamp, a thin gold line along the wall. [shared style] [本一牙醫診所 style]
 
 ### dental-intro.jpg (4:3)
-> A dental consultation desk area: a light-oak table with a tablet showing an abstract smooth gradient (no text), two upholstered chairs, a stone wall with subtle texture, a small plant, warm side light. [shared style]
+> A dentist in a white coat sits across a stone-topped table from an adult patient, explaining a treatment plan using a large white tooth model on the table. Upholstered mauve chairs, a pendant lamp, an arched window with a mountain view. [shared style] [本一牙醫診所 style]
 
 ### dental-wide.jpg (16:9)
-> A wide architectural detail of a premium dental clinic: a travertine reception counter with a soft curved edge, light-oak slatted wall behind it, warm indirect lighting, a ceramic vase with dried pampas grass, calm and uncluttered. Keep the main subject near the centre. [shared style]
+> A dentist in a white coat and an adult patient stand side by side, looking at a large wall screen that shows an abstract, light-line drawing of an arch of teeth and a single tooth on a navy background (no text or numbers). The dentist points at the screen. A tall arched window and a slim plant on the left. [shared style] [本一牙醫診所 style]
