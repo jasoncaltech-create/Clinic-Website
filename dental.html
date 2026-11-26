@@ -18,10 +18,11 @@
 <meta property="og:url" content="https://pyclinic.com/dental.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&amp;display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=7">
+<!-- 標題字體 Noto Serif TC 僅本頁（本一牙醫診所）載入 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&amp;family=Noto+Serif+TC:wght@400&amp;display=swap">
+<link rel="stylesheet" href="assets/css/style.css?v=8">
 <script>document.documentElement.classList.add("js");</script>
-<script src="assets/js/main.js?v=7" defer></script>
+<script src="assets/js/main.js?v=8" defer></script>
 <!-- 結構化資料（供 Google 與 AI 搜尋讀取）：若修改地址、電話、門診時間，請同步更新此處 -->
 <script type="application/ld+json">
 {
@@ -80,7 +81,8 @@
 }
 </script>
 </head>
-<body>
+<!-- page-dental：本頁專用的版面與配色（見 assets/css/style.css 末段），不影響其他頁面 -->
+<body class="page-dental">
 <a class="skip-link" href="#main">跳至主要內容</a>
 
 <header class="site-header">
@@ -95,6 +97,8 @@
         <li><a href="dental.html" aria-current="page">本一牙醫診所</a></li>
       </ul>
     </nav>
+    <!-- ✏️ 頁首來電按鈕（手機版不顯示）：電話若有變更，請與下方主視覺的來電按鈕一併修改 -->
+    <a class="btn primary header-cta" href="tel:+886222836622">來電 (02) 2283-6622</a>
   </div>
 </header>
 
@@ -102,7 +106,7 @@
 
   <section class="page-hero" aria-labelledby="page-title">
     <div class="container page-hero-grid">
-      <div>
+      <div class="page-hero-text">
       <p class="eyebrow">本一聯合診所</p>
       <h1 id="page-title">本一牙醫診所</h1>
       <p class="services">微創植牙｜數位矯正｜全瓷美學</p>
@@ -111,7 +115,10 @@
         <a class="btn" href="#hours">看診時間說明</a>
       </div>
       </div>
-      <!-- ✏️ 情境照片（圖庫示意照，非本院實景） -->
+      <!-- ✏️ 主視覺照片（滿版背景）：目前暫用圖庫示意照 dental-room.jpg（非本院實景）。
+           新照片（AI 生成示意圖）備妥後，請以檔名 dental-hero.jpg 上傳至 assets/images/photos/，
+           再把下方 src 改為 assets/images/photos/dental-hero.jpg，並把 width、height 改成新照片的尺寸
+           （建議橫式，寬 2400、高 1350 以上）。「示意圖」標示請保留。 -->
       <figure class="page-hero-photo">
         <img src="assets/images/photos/dental-room.jpg" alt="示意圖：明亮現代的牙科診療室" width="960" height="640" fetchpriority="high">
         <figcaption class="photo-note">示意圖</figcaption>
@@ -132,9 +139,10 @@
   </nav>
 
   <!-- ========== 診所介紹 ========== -->
+  <!-- 各區標題下方的英文小字（ABOUT、SERVICES…）為裝飾用，不會被螢幕報讀軟體讀出 -->
   <section id="intro" aria-labelledby="intro-title">
     <div class="container narrow">
-      <div class="section-head"><h2 id="intro-title">診所介紹</h2></div>
+      <div class="section-head"><h2 id="intro-title">診所介紹</h2><p class="section-label" lang="en" aria-hidden="true">ABOUT</p></div>
       <!-- ✏️ 診所介紹 -->
       <p class="lead">本一牙醫診所位於新北市蘆洲區，由具醫學中心主治醫師資歷的資深牙科醫師趙文惠院長看診。</p>
       <p>每一次治療前，我們都會細心檢查並清楚說明，與病人共同討論合適的治療方式，讓您安心了解每一個步驟。</p>
@@ -142,25 +150,47 @@
   </section>
 
   <!-- ========== 診療項目 ========== -->
-  <section id="services" class="alt" aria-labelledby="services-title">
+  <section id="services" aria-labelledby="services-title">
     <div class="container">
-      <div class="section-head"><h2 id="services-title">診療項目</h2></div>
-      <!-- ✏️ 診療項目 -->
-      <div class="service-grid">
-        <article class="service">
-          <h3>微創植牙</h3>
-          <p>以減少組織創傷為原則規劃植牙治療，協助修復缺牙、恢復咀嚼功能。</p>
-        </article>
-        <article class="service">
-          <h3>數位矯正</h3>
-          <p>運用數位化流程進行齒列評估與矯正規劃，協助改善齒列排列與咬合。</p>
-        </article>
-        <article class="service">
-          <h3>全瓷美學</h3>
-          <p>以全瓷材質進行牙齒修復，兼顧牙齒功能與自然外觀。</p>
-        </article>
+      <div class="section-head"><h2 id="services-title">診療項目</h2><p class="section-label" lang="en" aria-hidden="true">SERVICES</p></div>
+      <div class="svc-split">
+        <!-- ✏️ 診療項目（01. 02. 03. 為裝飾用編號；增減項目時請一併調整） -->
+        <ol class="svc-list" role="list">
+          <li>
+            <span class="num" aria-hidden="true">01.</span>
+            <div>
+              <h3>微創植牙</h3>
+              <p>以減少組織創傷為原則規劃植牙治療，協助修復缺牙、恢復咀嚼功能。</p>
+            </div>
+          </li>
+          <li>
+            <span class="num" aria-hidden="true">02.</span>
+            <div>
+              <h3>數位矯正</h3>
+              <p>運用數位化流程進行齒列評估與矯正規劃，協助改善齒列排列與咬合。</p>
+            </div>
+          </li>
+          <li>
+            <span class="num" aria-hidden="true">03.</span>
+            <div>
+              <h3>全瓷美學</h3>
+              <p>以全瓷材質進行牙齒修復，兼顧牙齒功能與自然外觀。</p>
+            </div>
+          </li>
+        </ol>
+        <!-- ✏️ 診療項目旁的照片：目前暫用本院實景照 interior.jpg（掛號櫃台與候診區）。
+             新照片（AI 生成示意圖）備妥後，請以檔名 dental-services.jpg 上傳至 assets/images/photos/，
+             再把下方 figure 整段換成（alt 請依照片內容填寫）：
+             <figure class="svc-photo">
+               <img src="assets/images/photos/dental-services.jpg" alt="示意圖：" width="1600" height="1400" loading="lazy">
+               <figcaption class="photo-note">示意圖</figcaption>
+             </figure> -->
+        <figure class="svc-photo">
+          <img src="assets/images/photos/interior.jpg" alt="本一聯合診所的掛號櫃台與候診區，空間明亮整潔" width="1010" height="707" loading="lazy">
+          <figcaption>掛號櫃台與候診區</figcaption>
+        </figure>
       </div>
-      <p class="note" style="margin-top:1.5rem">實際治療方式需經醫師檢查評估後決定。</p>
+      <p class="note">實際治療方式需經醫師檢查評估後決定。</p>
 
       <!-- ✏️ 其他服務 -->
       <div class="other-services">
@@ -177,43 +207,51 @@
   <!-- ========== 醫師介紹 ========== -->
   <section id="doctors" aria-labelledby="doctors-title">
     <div class="container">
-      <div class="section-head"><h2 id="doctors-title">醫師介紹</h2></div>
-      <!-- ✏️ 醫師介紹 -->
+      <div class="section-head"><h2 id="doctors-title">醫師介紹</h2><p class="section-label" lang="en" aria-hidden="true">DOCTOR</p></div>
+      <!-- ✏️ 醫師介紹（電腦版分兩欄：「主要經歷」在右欄，其餘在左欄；手機版依序排成一欄） -->
       <article class="doctor" id="dr-chao">
         <div class="doctor-name">
           <h3>趙文惠</h3>
           <span class="title">院長</span>
         </div>
         <dl>
-          <dt>專長</dt>
-          <dd>植牙</dd>
-          <dt>學歷</dt>
-          <dd><ul>
-            <li>國立陽明大學碩士</li>
-          </ul></dd>
-          <dt>主要經歷</dt>
-          <dd><ul>
-            <li>美國哈佛大學植牙專科訓練醫師</li>
-            <li>台大醫院牙科專科研究醫師</li>
-            <li>長庚醫院牙科專科研究醫師</li>
-            <li>前新光醫院醫師</li>
-            <li>中華民國臨床植牙醫學會會員</li>
-            <li>松年大學講師</li>
-            <li>褓母協會講師</li>
-          </ul></dd>
-          <dt>專科資格</dt>
-          <dd><ul>
-            <li>台灣福爾摩沙植牙學會專科醫師</li>
-          </ul></dd>
+          <div class="cred">
+            <dt>專長</dt>
+            <dd class="plain">植牙</dd>
+          </div>
+          <div class="cred">
+            <dt>學歷</dt>
+            <dd><ul>
+              <li>國立陽明大學碩士</li>
+            </ul></dd>
+          </div>
+          <div class="cred cred-wide">
+            <dt>主要經歷</dt>
+            <dd><ul>
+              <li>美國哈佛大學植牙專科訓練醫師</li>
+              <li>台大醫院牙科專科研究醫師</li>
+              <li>長庚醫院牙科專科研究醫師</li>
+              <li>前新光醫院醫師</li>
+              <li>中華民國臨床植牙醫學會會員</li>
+              <li>松年大學講師</li>
+              <li>褓母協會講師</li>
+            </ul></dd>
+          </div>
+          <div class="cred">
+            <dt>專科資格</dt>
+            <dd><ul>
+              <li>台灣福爾摩沙植牙學會專科醫師</li>
+            </ul></dd>
+          </div>
         </dl>
       </article>
     </div>
   </section>
 
   <!-- ========== 門診時間 ========== -->
-  <section id="hours" class="alt" aria-labelledby="hours-title">
+  <section id="hours" aria-labelledby="hours-title">
     <div class="container">
-      <div class="section-head"><h2 id="hours-title">門診時間</h2></div>
+      <div class="section-head"><h2 id="hours-title">門診時間</h2><p class="section-label" lang="en" aria-hidden="true">HOURS</p></div>
       <!-- ✏️ 本一牙醫診所門診時間：目前以來電確認為主。日後若要公告固定時段，可參考 clinic.html 的時間表格式 -->
       <div class="call-note">
         <p class="call-note-title">看診時間請來電確認</p>
@@ -227,7 +265,7 @@
   <!-- ========== 聯絡資訊 ========== -->
   <section id="contact" aria-labelledby="contact-title">
     <div class="container">
-      <div class="section-head"><h2 id="contact-title">聯絡資訊</h2></div>
+      <div class="section-head"><h2 id="contact-title">聯絡資訊</h2><p class="section-label" lang="en" aria-hidden="true">CONTACT</p></div>
       <div class="contact-grid">
         <div>
           <!-- ✏️ 聯絡資訊 -->
